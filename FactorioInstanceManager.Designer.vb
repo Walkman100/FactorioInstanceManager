@@ -1,35 +1,33 @@
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FactorioInstanceManager
     Inherits System.Windows.Forms.Form
-    
-    ''' <summary>
-    ''' Designer variable used to keep track of non-visual components.
-    ''' </summary>
-    Private components As System.ComponentModel.IContainer
-    
-    ''' <summary>
-    ''' Disposes resources used by the form.
-    ''' </summary>
-    ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-        If disposing Then
-            If components IsNot Nothing Then
+        Try
+            If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If
-        End If
-        MyBase.Dispose(disposing)
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
     End Sub
-    
-    ''' <summary>
-    ''' This method is required for Windows Forms designer support.
-    ''' Do not change the method contents inside the source code editor. The Forms designer might
-    ''' not be able to load this method if it was changed manually.
-    ''' </summary>
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         '
         'MainForm
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Name = "MainForm"
+        Me.Name = "FactorioInstanceManager"
         Me.Text = "FactorioInstanceManager"
     End Sub
 End Class

@@ -1,10 +1,8 @@
-Public Partial Class FactorioInstanceManager
-    Public Sub New()
-        ' The Me.InitializeComponent call is required for Windows Forms designer support.
-        Me.InitializeComponent()
-        
-        '
-        ' TODO : Add constructor code after InitializeComponents
-        '
+Imports System
+Imports System.Windows.Forms
+
+Public Class FactorioInstanceManager
+    Private Sub FactorioInstanceManager_Load() Handles Me.Shown
+
     End Sub
 End Class

@@ -59,8 +59,10 @@
       <DependentUpon>FactorioInstanceManager.vb</DependentUpon>
     </Compile>
     <Compile Include="FactorioInstanceManager.vb" />
+    <Compile Include="General.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Properties\Application.vb" />
+    <Compile Include="Settings.vb" />
     <Compile Include="WalkmanLib\WalkmanLibDotNet.vb" />
     <Compile Include="WalkmanLib\WalkmanLibUpdates.vb" />
     <Compile Include="WalkmanLib\WalkmanLibWin32.vb" />
