@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="FactorioInstanceManager.vb" />
     <Compile Include="General.vb" />
+    <Compile Include="Helpers.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Properties\Application.vb" />
     <Compile Include="Settings.vb" />

@@ -113,7 +113,7 @@ Namespace General
             If Not setPath Then
                 Throw New InvalidDataException(installInstanceConfigCfg & " missing config-path key!")
             End If
-            File.WriteAllLines(configPath, configContents)
+            Helpers.WriteAllLines(configPath, configContents, Microsoft.VisualBasic.vbLf)
 
             instanceConfigPath = Path.Combine(instanceConfigPath, installInstanceConfigIni)
             If Not File.Exists(instanceConfigPath) Then
@@ -140,7 +140,7 @@ Namespace General
             If Not setPath Then
                 Throw New InvalidDataException(installInstanceConfigIni & " missing write-data key!")
             End If
-            File.WriteAllLines(instanceConfigPath, configContents)
+            Helpers.WriteAllLines(instanceConfigPath, configContents, Microsoft.VisualBasic.vbLf)
         End Sub
     End Module
 
@@ -196,7 +196,7 @@ Namespace General
                                                "write-data=" & instancePath
                                            }
 
-            File.WriteAllLines(configFilePath, fileContents)
+            Helpers.WriteAllLines(configFilePath, fileContents, Microsoft.VisualBasic.vbLf)
         End Sub
 
         Async Function DeleteInstance(instancePath As String) As Task
