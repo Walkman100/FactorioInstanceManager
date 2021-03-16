@@ -1,7 +1,9 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.IO
+Imports System.Threading.Tasks
 Imports System.Web.Script.Serialization
+Imports System.Windows.Forms
 
 Namespace General
     Module Installs
@@ -26,7 +28,6 @@ Namespace General
             If Not jsonObjectDict.ContainsKey("version") Then
                 Throw New InvalidDataException(installVersionInfoJson & " missing version key!")
             End If
-
             Dim version As Version = Nothing
             If Not Version.TryParse(DirectCast(jsonObjectDict("version"), String), version) Then
                 Throw New InvalidDataException(installVersionInfoJson & " version key not convertable to Version!")
@@ -148,18 +149,61 @@ Namespace General
 
         End Function
 
+        Private Const instanceVersionDataJson As String = "player-data.json"
         Function GetInstanceVersion(instancePath As String) As Version
-            'lastPlayedVersion in playerdata
+            Dim dataPath As String = Path.Combine(instancePath, instanceVersionDataJson)
+            If Not File.Exists(dataPath) Then
+                Throw New FileNotFoundException("Invalid Instance! Missing " & instanceVersionDataJson, dataPath)
+            End If
 
+            Dim jsonObject As String = File.ReadAllText(dataPath)
+            Dim jss As New JavaScriptSerializer()
+            Dim jsonObjectDict As Dictionary(Of String, Object) = jss.Deserialize(Of Dictionary(Of String, Object))(jsonObject)
+
+            If Not jsonObjectDict.ContainsKey("last-played-version") Then
+                Throw New InvalidDataException(instanceVersionDataJson & " missing last-played-version key!")
+            End If
+            Dim lastPlayedVersion As Dictionary(Of String, Object) = TryCast(jsonObjectDict("last-played-version"), Dictionary(Of String, Object))
+            If lastPlayedVersion Is Nothing Then
+                Throw New InvalidDataException(instanceVersionDataJson & " last-played-version key not convertable to array!")
+            End If
+
+            If Not lastPlayedVersion.ContainsKey("game_version") Then
+                Throw New InvalidDataException(instanceVersionDataJson & " missing last-played-version.game_version key!")
+            End If
+            Dim version As Version = Nothing
+            If Not Version.TryParse(DirectCast(lastPlayedVersion("game_version"), String), version) Then
+                Throw New InvalidDataException(instanceVersionDataJson & " last-played-version.game_version key not convertable to Version!")
+            End If
+
+            Return version
         End Function
 
         Sub CreateInstance(instancePath As String)
-            'create config folder only
+            If WalkmanLib.IsFileOrDirectory(instancePath).HasFlag(PathEnum.Exists) Then
+                Throw New InvalidOperationException(instancePath & " already exists!")
+            End If
 
+            Directory.CreateDirectory(Path.Combine(instancePath, "config"))
+            Dim configFilePath As String = Path.Combine(instancePath, "config", "config.ini")
+
+            Dim fileContents As String() = { ' default config.ini header
+                                               "; version=9",
+                                               "; This is INI file : https://en.wikipedia.org/wiki/INI_file#Format",
+                                               "; Semicolons (;) at the beginning of the line indicate a comment. Comment lines are ignored.",
+                                               "[path]",
+                                               "read-data=" & Path.Combine("__PATH__executable__", "..", "..", "data"),
+                                               "write-data=" & instancePath
+                                           }
+
+            File.WriteAllLines(configFilePath, fileContents)
         End Sub
 
-        Sub DeleteInstance(instancePath As String)
-
-        End Sub
+        Async Function DeleteInstance(instancePath As String) As Task
+            If MessageBox.Show($"Are you sure you want to delete ""{instancePath}""?", "Deleting Instance",
+                               MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
+                Await Task.Run(Sub() Directory.Delete(instancePath, recursive:=True))
+            End If
+        End Function
     End Module
 End Namespace
