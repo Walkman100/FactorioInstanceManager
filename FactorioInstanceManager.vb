@@ -1,4 +1,5 @@
 Imports System
+Imports System.IO
 Imports System.Windows.Forms
 
 Public Class FactorioInstanceManager
@@ -66,13 +67,47 @@ Public Class FactorioInstanceManager
 
 #Region "MenuStrip Events"
     Private Sub menuStripFileAddInstance_Click() Handles menuStripFileAddInstance.Click
-
+        Dim selectedPath As String = Settings.DefaultInstancePath & Path.DirectorySeparatorChar
+        If Helpers.SelectFolderDialog(selectedPath, "Select Instance Folder", False) = DialogResult.OK Then
+            Try
+                Dim instanceVersion As Version = General.GetInstanceVersion(selectedPath)
+                lstInstances.Items.Add(CreateInstanceItem(New Settings.Instance With {
+                                                              .Path = selectedPath,
+                                                              .Version = instanceVersion
+                                                          }))
+            Catch ex As FileNotFoundException
+                MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                "Error Adding Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Error Adding Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
     End Sub
     Private Sub menuStripFileAddInstall_Click() Handles menuStripFileAddInstall.Click
-
+        Dim selectedPath As String = ""
+        If Helpers.SelectFolderDialog(selectedPath, "Select Install Folder", False) = DialogResult.OK Then
+            Try
+                Dim installVersion As Version = General.GetInstallVersion(selectedPath)
+                lstInstalls.Items.Add(CreateInstallItem(New Settings.Install With {
+                                                            .Path = selectedPath,
+                                                            .Version = installVersion
+                                                        }))
+            Catch ex As FileNotFoundException
+                MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                "Error Adding Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Error Adding Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
     End Sub
     Private Sub menuStripFileRemoveSelected_Click() Handles menuStripFileRemoveSelected.Click
+        For Each item As ListViewItem In lstInstalls.SelectedItems
+            item.Remove()
+        Next
 
+        For Each item As ListViewItem In lstInstances.SelectedItems
+            item.Remove()
+        Next
     End Sub
     Private Sub menuStripFileCreateInstance_Click() Handles menuStripFileCreateInstance.Click
 
