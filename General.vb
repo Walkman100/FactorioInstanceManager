@@ -210,10 +210,13 @@ Namespace General
             Helpers.WriteAllLines(configFilePath, fileContents, Microsoft.VisualBasic.vbLf)
         End Sub
 
-        Async Function DeleteInstance(instancePath As String) As Task
+        Async Function DeleteInstance(instancePath As String) As Task(Of Boolean)
             If MessageBox.Show($"Are you sure you want to delete ""{instancePath}""?", "Deleting Instance",
                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
                 Await Task.Run(Sub() Directory.Delete(instancePath, recursive:=True))
+                Return True
+            Else
+                Return False
             End If
         End Function
 

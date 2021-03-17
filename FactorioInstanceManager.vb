@@ -1,5 +1,6 @@
 Imports System
 Imports System.IO
+Imports System.Linq
 Imports System.Windows.Forms
 
 Public Class FactorioInstanceManager
@@ -110,10 +111,40 @@ Public Class FactorioInstanceManager
         Next
     End Sub
     Private Sub menuStripFileCreateInstance_Click() Handles menuStripFileCreateInstance.Click
+        Dim parentPath As String = Settings.DefaultInstancePath
+        If Helpers.SelectFolderDialog(parentPath, "Select Instance Parent Folder", True) <> DialogResult.OK Then
+            Exit Sub
+        End If
 
+        Dim instanceName As String = ""
+        If Helpers.GetInput(instanceName, "Creating Instance", "Enter Instance Name") <> DialogResult.OK Then
+            Exit Sub
+        End If
+
+        Dim instancePath As String = Path.Combine(parentPath, instanceName)
+
+        General.CreateInstance(instancePath)
+        lstInstances.Items.Add(CreateInstanceItem(New Settings.Instance With {
+                                                      .Path = instancePath,
+                                                      .Version = Nothing
+                                                  }))
     End Sub
-    Private Sub menuStripFileDeleteInstance_Click() Handles menuStripFileDeleteInstance.Click
+    Private Async Sub menuStripFileDeleteInstance_Click() Handles menuStripFileDeleteInstance.Click
+        Dim items As Collections.Generic.List(Of ListViewItem) = lstInstances.SelectedItems.Cast(Of ListViewItem).ToList()
 
+        For Each item As ListViewItem In items
+            item.ForeColor = Drawing.SystemColors.GrayText
+            item.Selected = False
+        Next
+
+        For Each item As ListViewItem In items
+            Dim instance As Settings.Instance = GetInstance(item)
+            If Await General.DeleteInstance(instance.Path) Then
+                item.Remove()
+            Else ' restore default color
+                item.ForeColor = Drawing.SystemColors.WindowText
+            End If
+        Next
     End Sub
     Private Sub menuStripFileExit_Click() Handles menuStripFileExit.Click
         Application.Exit()
