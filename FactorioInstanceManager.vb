@@ -4,6 +4,7 @@ Imports System.Linq
 Imports System.Windows.Forms
 
 Public Class FactorioInstanceManager
+    Private _settingsLoaded As Boolean = False
     Private Sub FactorioInstanceManager_Load() Handles Me.Shown
         lstInstalls.DoubleBuffered(True)
         lstInstances.DoubleBuffered(True)
@@ -23,6 +24,8 @@ Public Class FactorioInstanceManager
             lstInstances.Items.Add(CreateInstanceItem(instance))
         Next
 
+        _settingsLoaded = True
+
         lstItemSelectionChanged()
     End Sub
 
@@ -37,13 +40,15 @@ Public Class FactorioInstanceManager
     End Sub
 
     Private Sub FactorioInstanceManager_Resize() Handles MyBase.Resize
-        Settings.WindowMaximised = (Me.WindowState = FormWindowState.Maximized)
+        If _settingsLoaded Then
+            Settings.WindowMaximised = (Me.WindowState = FormWindowState.Maximized)
 
-        If Me.WindowState <> FormWindowState.Maximized Then
-            Settings.WindowWidth = Me.Width
-            Settings.WindowHeight = Me.Height
+            If Me.WindowState <> FormWindowState.Maximized Then
+                Settings.WindowWidth = Me.Width
+                Settings.WindowHeight = Me.Height
+            End If
+            Settings.SaveSettings()
         End If
-        Settings.SaveSettings()
     End Sub
 
 #Region "Install Helpers"

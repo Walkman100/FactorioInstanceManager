@@ -52,7 +52,21 @@ Public Class Settings
     Public Shared Property WindowMaximised As Boolean
     Public Shared Property WindowWidth As Integer
     Public Shared Property WindowHeight As Integer
+
+    ' make sure _defaultInstancePath always has at least a space, to prevent XML saving/loading issues
+    Private Shared _defaultInstancePath As String = " "
     Public Shared Property DefaultInstancePath As String
+        Get
+            Return _defaultInstancePath.Trim()
+        End Get
+        Set(value As String)
+            If String.IsNullOrWhiteSpace(value) Then
+                value = " "
+            End If
+            _defaultInstancePath = value
+        End Set
+    End Property
+
     Public Shared Property Installs As New List(Of Install)
     Public Shared Property Instances As New List(Of Instance)
 
@@ -123,7 +137,7 @@ Public Class Settings
             writer.WriteElementString("WindowMaximised", WindowMaximised.ToString())
             writer.WriteElementString("WindowWidth", WindowWidth.ToString())
             writer.WriteElementString("WindowHeight", WindowHeight.ToString())
-            writer.WriteElementString("DefaultInstancePath", DefaultInstancePath)
+            writer.WriteElementString("DefaultInstancePath", _defaultInstancePath)
             writer.WriteEndElement() ' Settings
 
             writer.WriteStartElement("Installs")
@@ -139,7 +153,7 @@ Public Class Settings
             For Each instance As Instance In Instances
                 writer.WriteStartElement("Instance")
                 writer.WriteAttributeString("path", instance.Path)
-                writer.WriteAttributeString("version", instance.Version.ToString())
+                writer.WriteAttributeString("version", instance.Version?.ToString())
                 writer.WriteAttributeString("iconpath", instance.IconPath)
                 writer.WriteEndElement()
             Next
