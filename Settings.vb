@@ -1,4 +1,5 @@
 Imports System
+Imports System.Collections.Generic
 Imports System.IO
 Imports System.Windows.Forms
 
@@ -25,6 +26,26 @@ Public Class Settings
         ElseIf               File.Exists(configFileName) Then
             _settingsPath = New FileInfo(configFileName).FullName
         End If
+
+        ' preload values in case they aren't set
+        WindowWidth = FactorioInstanceManager.Width
+        WindowHeight = FactorioInstanceManager.Height
     End Sub
 
+    Public Structure Install
+        Public Path As String
+        Public Version As Version
+    End Structure
+    Public Structure Instance
+        Public Path As String
+        Public Version As Version
+        Public IconPath As String
+    End Structure
+
+    Public Shared Property WindowMaximised As Boolean
+    Public Shared Property WindowWidth As Integer
+    Public Shared Property WindowHeight As Integer
+    Public Shared Property DefaultInstancePath As String
+    Public Shared Property Installs As New List(Of Install)
+    Public Shared Property Instances As New List(Of Instance)
 End Class
