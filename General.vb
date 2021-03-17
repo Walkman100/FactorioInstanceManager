@@ -7,10 +7,6 @@ Imports System.Windows.Forms
 
 Namespace General
     Module Installs
-        Function FindSteamInstall() As String
-
-        End Function
-
         Private Const installVersionInfoJson As String = "info.json"
         Function GetInstallVersion(installPath As String) As Version
             Dim infoPath As String = Path.Combine(installPath, "data", "base", installVersionInfoJson)
@@ -142,13 +138,28 @@ Namespace General
             End If
             Helpers.WriteAllLines(instanceConfigPath, configContents, Microsoft.VisualBasic.vbLf)
         End Sub
+
+        Function FindSteamInstall() As String
+            'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 427520\InstallLocation
+            Dim keyPath As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 427520"
+
+            ' always use 32-bit view
+            Dim localKey As Microsoft.Win32.RegistryKey = Microsoft.Win32.RegistryKey.OpenBaseKey(
+                    Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Default)
+            localKey = localKey.OpenSubKey(keyPath)
+
+            If localKey IsNot Nothing AndAlso localKey.GetValue("InstallLocation") IsNot Nothing Then
+                Dim rtn As String = localKey.GetValue("InstallLocation").ToString()
+                If Directory.Exists(rtn) Then
+                    Return Path.GetFullPath(rtn)
+                End If
+            End If
+
+            Return Nothing
+        End Function
     End Module
 
     Module Instances
-        Function FindInstances(rootPath As String) As String()
-
-        End Function
-
         Private Const instanceVersionDataJson As String = "player-data.json"
         Function GetInstanceVersion(instancePath As String) As Version
             Dim dataPath As String = Path.Combine(instancePath, instanceVersionDataJson)
@@ -204,6 +215,10 @@ Namespace General
                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
                 Await Task.Run(Sub() Directory.Delete(instancePath, recursive:=True))
             End If
+        End Function
+
+        Function FindInstances(rootPath As String) As String()
+
         End Function
     End Module
 End Namespace
