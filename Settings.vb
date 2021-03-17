@@ -6,6 +6,7 @@ Imports System.Xml
 
 Public Class Settings
     Private Shared _settingsPath As String
+    Private Shared _loaded As Boolean = False
 
     Public Shared Sub Init()
         Dim configFileName As String = "FactorioInstanceManager.xml"
@@ -35,6 +36,7 @@ Public Class Settings
         If File.Exists(_settingsPath) Then
             LoadSettings()
         End If
+        _loaded = True
     End Sub
 
     Public Structure Install
@@ -112,6 +114,7 @@ Public Class Settings
     End Sub
 
     Friend Shared Sub SaveSettings()
+        If Not _loaded Then Return
         Using writer As XmlWriter = XmlWriter.Create(_settingsPath, New XmlWriterSettings With {.Indent = True})
             writer.WriteStartDocument()
             writer.WriteStartElement("FactorioInstanceManager")

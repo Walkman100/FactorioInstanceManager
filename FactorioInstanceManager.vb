@@ -22,6 +22,18 @@ Public Class FactorioInstanceManager
         For Each instance As Settings.Instance In Settings.Instances
             lstInstances.Items.Add(CreateInstanceItem(instance))
         Next
+
+        lstItemSelectionChanged()
+    End Sub
+
+    Private Sub UpdateSettingsItems()
+        Settings.Installs.Clear()
+        Settings.Installs.AddRange(lstInstalls.Items.Cast(Of ListViewItem).Select(AddressOf GetInstall))
+
+        Settings.Instances.Clear()
+        Settings.Instances.AddRange(lstInstances.Items.Cast(Of ListViewItem).Select(AddressOf GetInstance))
+
+        Settings.SaveSettings()
     End Sub
 
     Private Sub FactorioInstanceManager_Resize() Handles MyBase.Resize
@@ -31,6 +43,7 @@ Public Class FactorioInstanceManager
             Settings.WindowWidth = Me.Width
             Settings.WindowHeight = Me.Height
         End If
+        Settings.SaveSettings()
     End Sub
 
 #Region "Install Helpers"
@@ -81,6 +94,7 @@ Public Class FactorioInstanceManager
                                                               .Path = selectedPath,
                                                               .Version = instanceVersion
                                                           }))
+                UpdateSettingsItems()
             Catch ex As FileNotFoundException
                 MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                 "Error Adding Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -98,6 +112,7 @@ Public Class FactorioInstanceManager
                                                             .Path = selectedPath,
                                                             .Version = installVersion
                                                         }))
+                UpdateSettingsItems()
             Catch ex As FileNotFoundException
                 MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                 "Error Adding Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -114,6 +129,8 @@ Public Class FactorioInstanceManager
         For Each item As ListViewItem In lstInstances.SelectedItems
             item.Remove()
         Next
+
+        UpdateSettingsItems()
     End Sub
     Private Sub menuStripFileCreateInstance_Click() Handles menuStripFileCreateInstance.Click
         Dim parentPath As String = Settings.DefaultInstancePath
@@ -133,6 +150,7 @@ Public Class FactorioInstanceManager
                                                       .Path = instancePath,
                                                       .Version = Nothing
                                                   }))
+        UpdateSettingsItems()
     End Sub
     Private Async Sub menuStripFileDeleteInstance_Click() Handles menuStripFileDeleteInstance.Click
         Dim items As Collections.Generic.List(Of ListViewItem) = lstInstances.SelectedItems.Cast(Of ListViewItem).ToList()
@@ -150,6 +168,7 @@ Public Class FactorioInstanceManager
                 item.ForeColor = Drawing.SystemColors.WindowText
             End If
         Next
+        UpdateSettingsItems()
     End Sub
     Private Sub menuStripFileExit_Click() Handles menuStripFileExit.Click
         Application.Exit()
@@ -169,6 +188,7 @@ Public Class FactorioInstanceManager
                                                               .Version = instanceVersion
                                                           }))
             Next
+            UpdateSettingsItems()
         End If
     End Sub
     Private Sub menuStripToolsDetectInstall_Click() Handles menuStripToolsDetectInstall.Click
@@ -184,10 +204,15 @@ Public Class FactorioInstanceManager
                                                         .Path = installPath,
                                                         .Version = installVersion
                                                     }))
+            UpdateSettingsItems()
+        Else
+            MessageBox.Show("Could not find Factorio Steam install!")
         End If
     End Sub
     Private Sub menuStripToolsSetDefaultInstancePath_Click() Handles menuStripToolsSetDefaultInstancePath.Click
-        Helpers.SelectFolderDialog(Settings.DefaultInstancePath, "Select Default Instance Path", False)
+        If Helpers.SelectFolderDialog(Settings.DefaultInstancePath, "Select Default Instance Path", False) = DialogResult.OK Then
+            Settings.SaveSettings()
+        End If
     End Sub
 #End Region
 
