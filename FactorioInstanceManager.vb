@@ -155,13 +155,34 @@ Public Class FactorioInstanceManager
     End Sub
 
     Private Sub menuStripToolsScan_Click() Handles menuStripToolsScan.Click
-
+        Dim selectedPath As String = Settings.DefaultInstancePath
+        If Helpers.SelectFolderDialog(selectedPath, "Select Root Folder to scan", False) = DialogResult.OK Then
+            For Each path As String In General.FindInstances(selectedPath)
+                Dim instanceVersion As Version = General.GetInstanceVersion(path)
+                lstInstances.Items.Add(CreateInstanceItem(New Settings.Instance With {
+                                                              .Path = path,
+                                                              .Version = instanceVersion
+                                                          }))
+            Next
+        End If
     End Sub
     Private Sub menuStripToolsDetectInstall_Click() Handles menuStripToolsDetectInstall.Click
+        Dim installPath As String = General.FindSteamInstall()
 
+        If installPath IsNot Nothing Then
+            Dim installVersion As Version = Nothing
+            Try
+                installVersion = General.GetInstallVersion(installPath)
+            Catch : End Try
+
+            lstInstalls.Items.Add(CreateInstallItem(New Settings.Install With {
+                                                        .Path = installPath,
+                                                        .Version = installVersion
+                                                    }))
+        End If
     End Sub
     Private Sub menuStripToolsSetDefaultInstancePath_Click() Handles menuStripToolsSetDefaultInstancePath.Click
-
+        Helpers.SelectFolderDialog(Settings.DefaultInstancePath, "Select Default Instance Path", False)
     End Sub
 #End Region
 
