@@ -187,7 +187,22 @@ Public Class FactorioInstanceManager
     End Sub
 
     Private Sub menuStripEditSetInstallInstance_Click() Handles menuStripEditSetInstallInstance.Click
+        If lstInstances.SelectedItems.Count <> 1 Then
+            MessageBox.Show("Select One Instance to apply!", "Error Setting Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
 
+        Dim instancePath As String = GetInstance(lstInstances.SelectedItems(0)).Path
+        For Each install As Settings.Install In lstInstalls.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstall)
+            Try
+                General.SetInstallCurrentInstance(install.Path, instancePath)
+            Catch ex As FileNotFoundException
+                MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                "Error Setting Install Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Catch ex As Exception
+                WalkmanLib.ErrorDialog(ex, "Error Setting Install Instance!" & Environment.NewLine)
+            End Try
+        Next
     End Sub
 
     Private Sub menuStripToolsScan_Click() Handles menuStripToolsScan.Click
