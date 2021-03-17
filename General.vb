@@ -217,8 +217,13 @@ Namespace General
             End If
         End Function
 
-        Function FindInstances(rootPath As String) As String()
-
+        Iterator Function FindInstances(rootPath As String) As IEnumerable(Of String)
+            For Each dir As String In Directory.EnumerateDirectories(rootPath)
+                Try
+                    GetInstanceVersion(dir)
+                    Yield dir
+                Catch : End Try
+            Next
         End Function
     End Module
 End Namespace
