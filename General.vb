@@ -21,7 +21,7 @@ Namespace General
             Dim jss As New JavaScriptSerializer()
             Dim jsonObjectDict As Dictionary(Of String, Object) = jss.Deserialize(Of Dictionary(Of String, Object))(jsonObject)
 
-            If Not jsonObjectDict.ContainsKey("version") Then
+            If jsonObjectDict Is Nothing OrElse Not jsonObjectDict.ContainsKey("version") Then
                 Throw New InvalidDataException(installVersionInfoJson & " missing version key!")
             End If
             Dim version As Version = Nothing

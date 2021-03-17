@@ -41,14 +41,21 @@ Public Class FactorioInstanceManager
 
     Private Sub FactorioInstanceManager_Resize() Handles MyBase.Resize
         If _settingsLoaded Then
-            Settings.WindowMaximised = (Me.WindowState = FormWindowState.Maximized)
+            If (Me.WindowState = FormWindowState.Maximized AndAlso Not Settings.WindowMaximised) OrElse
+                    (Me.WindowState = FormWindowState.Normal AndAlso Settings.WindowMaximised) Then
+                ' ResizeEnd event below doesn't fire when window is Maximised, so save if the state has changed
+                Settings.WindowMaximised = (Me.WindowState = FormWindowState.Maximized)
+                Settings.SaveSettings()
+            End If
 
             If Me.WindowState <> FormWindowState.Maximized Then
                 Settings.WindowWidth = Me.Width
                 Settings.WindowHeight = Me.Height
             End If
-            Settings.SaveSettings()
         End If
+    End Sub
+    Private Sub FactorioInstanceManager_ResizeEnd() Handles MyBase.ResizeEnd
+        Settings.SaveSettings()
     End Sub
 
 #Region "Install Helpers"
@@ -104,7 +111,7 @@ Public Class FactorioInstanceManager
                 MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                 "Error Adding Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Catch ex As Exception
-                MessageBox.Show(ex.Message, "Error Adding Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                WalkmanLib.ErrorDialog(ex, "Error Adding Instance!" & Environment.NewLine)
             End Try
         End If
     End Sub
@@ -122,7 +129,7 @@ Public Class FactorioInstanceManager
                 MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                 "Error Adding Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Catch ex As Exception
-                MessageBox.Show(ex.Message, "Error Adding Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                WalkmanLib.ErrorDialog(ex, "Error Adding Install!" & Environment.NewLine)
             End Try
         End If
     End Sub
