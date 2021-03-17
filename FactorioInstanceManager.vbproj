@@ -58,7 +58,9 @@
     <Compile Include="FactorioInstanceManager.Designer.vb">
       <DependentUpon>FactorioInstanceManager.vb</DependentUpon>
     </Compile>
-    <Compile Include="FactorioInstanceManager.vb" />
+    <Compile Include="FactorioInstanceManager.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="General.vb" />
     <Compile Include="Helpers.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
