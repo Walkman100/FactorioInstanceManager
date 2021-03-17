@@ -25,7 +25,12 @@ Public Class FactorioInstanceManager
     End Sub
 
     Private Sub FactorioInstanceManager_Resize() Handles MyBase.Resize
+        Settings.WindowMaximised = (Me.WindowState = FormWindowState.Maximized)
 
+        If Me.WindowState <> FormWindowState.Maximized Then
+            Settings.WindowWidth = Me.Width
+            Settings.WindowHeight = Me.Height
+        End If
     End Sub
 
 #Region "Install Helpers"
@@ -188,15 +193,24 @@ Public Class FactorioInstanceManager
 
 #Region "ListView Events"
     Private Sub lstItemSelectionChanged() Handles lstInstalls.ItemSelectionChanged, lstInstances.ItemSelectionChanged
-
+        menuStripFileRemoveSelected.Enabled = lstInstalls.SelectedItems.Count > 0 OrElse lstInstances.SelectedItems.Count > 0
+        menuStripFileDeleteInstance.Enabled = lstInstances.SelectedItems.Count > 0
     End Sub
 
     Private Sub lstInstalls_ItemActivate() Handles lstInstalls.ItemActivate
-
+        If lstInstalls.SelectedItems.Count > 0 Then
+            For Each item As Settings.Install In lstInstalls.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstall)
+                Diagnostics.Process.Start(item.Path)
+            Next
+        End If
     End Sub
 
     Private Sub lstInstances_ItemActivate() Handles lstInstances.ItemActivate
-
+        If lstInstances.SelectedItems.Count > 0 Then
+            For Each item As Settings.Instance In lstInstances.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstance)
+                Diagnostics.Process.Start(item.Path)
+            Next
+        End If
     End Sub
 #End Region
 End Class
