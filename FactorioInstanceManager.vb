@@ -34,6 +34,7 @@ Public Class FactorioInstanceManager
         _settingsLoaded = True
 
         lstItemSelectionChanged()
+        Dim unused = UpdateInfo()
     End Sub
 
     Private Sub UpdateCheckComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs)
@@ -262,6 +263,30 @@ Public Class FactorioInstanceManager
         Next
 
         Await UpdateInfo()
+    End Sub
+    Private Sub menuStripEditSelectAll_Click() Handles menuStripEditSelectAll.Click
+        For Each item As ListViewItem In lstInstalls.Items
+            item.Selected = True
+        Next
+        For Each item As ListViewItem In lstInstances.Items
+            item.Selected = True
+        Next
+    End Sub
+    Private Sub menuStripEditDeselectAll_Click() Handles menuStripEditDeselectAll.Click
+        For Each item As ListViewItem In lstInstalls.Items
+            item.Selected = False
+        Next
+        For Each item As ListViewItem In lstInstances.Items
+            item.Selected = False
+        Next
+    End Sub
+    Private Sub menuStripEditInvertSelection_Click() Handles menuStripEditInvertSelection.Click
+        For Each item As ListViewItem In lstInstalls.Items
+            item.Selected = Not item.Selected
+        Next
+        For Each item As ListViewItem In lstInstances.Items
+            item.Selected = Not item.Selected
+        Next
     End Sub
 
     Private Sub menuStripToolsScan_Click() Handles menuStripToolsScan.Click

@@ -34,6 +34,10 @@ Partial Class FactorioInstanceManager
         Me.menuStripFileExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripEdit = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripEditSetInstallInstance = New System.Windows.Forms.ToolStripMenuItem()
+        Me.menuStripEditSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.menuStripEditSelectAll = New System.Windows.Forms.ToolStripMenuItem()
+        Me.menuStripEditDeselectAll = New System.Windows.Forms.ToolStripMenuItem()
+        Me.menuStripEditInvertSelection = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripToolsScan = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripToolsDetectInstall = New System.Windows.Forms.ToolStripMenuItem()
@@ -41,6 +45,7 @@ Partial Class FactorioInstanceManager
         Me.menuStripToolsUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripToolsSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.menuStripToolsSetDefaultInstancePath = New System.Windows.Forms.ToolStripMenuItem()
+        Me.menuStripToolsEnableUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.scMain = New System.Windows.Forms.SplitContainer()
         Me.lstInstalls = New System.Windows.Forms.ListView()
         Me.colHeadInstallsPath = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -50,7 +55,6 @@ Partial Class FactorioInstanceManager
         Me.colHeadInstancesPath = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.colHeadInstancesVersion = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.colHeadInstancesIconPath = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.menuStripToolsEnableUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripMain.SuspendLayout()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scMain.Panel1.SuspendLayout()
@@ -122,7 +126,7 @@ Partial Class FactorioInstanceManager
         '
         'menuStripEdit
         '
-        Me.menuStripEdit.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuStripEditSetInstallInstance})
+        Me.menuStripEdit.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuStripEditSetInstallInstance, Me.menuStripEditSeparator1, Me.menuStripEditSelectAll, Me.menuStripEditDeselectAll, Me.menuStripEditInvertSelection})
         Me.menuStripEdit.Name = "menuStripEdit"
         Me.menuStripEdit.Size = New System.Drawing.Size(39, 20)
         Me.menuStripEdit.Text = "&Edit"
@@ -130,8 +134,31 @@ Partial Class FactorioInstanceManager
         'menuStripEditSetInstallInstance
         '
         Me.menuStripEditSetInstallInstance.Name = "menuStripEditSetInstallInstance"
-        Me.menuStripEditSetInstallInstance.Size = New System.Drawing.Size(213, 22)
+        Me.menuStripEditSetInstallInstance.Size = New System.Drawing.Size(253, 22)
         Me.menuStripEditSetInstallInstance.Text = "Set Install's active instance"
+        '
+        'menuStripEditSeparator1
+        '
+        Me.menuStripEditSeparator1.Name = "menuStripEditSeparator1"
+        Me.menuStripEditSeparator1.Size = New System.Drawing.Size(250, 6)
+        '
+        'menuStripEditSelectAll
+        '
+        Me.menuStripEditSelectAll.Name = "menuStripEditSelectAll"
+        Me.menuStripEditSelectAll.Size = New System.Drawing.Size(253, 22)
+        Me.menuStripEditSelectAll.Text = "Select All"
+        '
+        'menuStripEditDeselectAll
+        '
+        Me.menuStripEditDeselectAll.Name = "menuStripEditDeselectAll"
+        Me.menuStripEditDeselectAll.Size = New System.Drawing.Size(253, 22)
+        Me.menuStripEditDeselectAll.Text = "Deselect All"
+        '
+        'menuStripEditInvertSelection
+        '
+        Me.menuStripEditInvertSelection.Name = "menuStripEditInvertSelection"
+        Me.menuStripEditInvertSelection.Size = New System.Drawing.Size(253, 22)
+        Me.menuStripEditInvertSelection.Text = "Invert Selection"
         '
         'menuStripTools
         '
@@ -173,6 +200,13 @@ Partial Class FactorioInstanceManager
         Me.menuStripToolsSetDefaultInstancePath.Name = "menuStripToolsSetDefaultInstancePath"
         Me.menuStripToolsSetDefaultInstancePath.Size = New System.Drawing.Size(205, 22)
         Me.menuStripToolsSetDefaultInstancePath.Text = "Set Default Instance Path"
+        '
+        'menuStripToolsEnableUpdate
+        '
+        Me.menuStripToolsEnableUpdate.CheckOnClick = True
+        Me.menuStripToolsEnableUpdate.Name = "menuStripToolsEnableUpdate"
+        Me.menuStripToolsEnableUpdate.Size = New System.Drawing.Size(209, 22)
+        Me.menuStripToolsEnableUpdate.Text = "Enable Update Check"
         '
         'scMain
         '
@@ -252,13 +286,6 @@ Partial Class FactorioInstanceManager
         Me.colHeadInstancesIconPath.Text = "Icon Path"
         Me.colHeadInstancesIconPath.Width = 300
         '
-        'menuStripToolsEnableUpdate
-        '
-        Me.menuStripToolsEnableUpdate.CheckOnClick = True
-        Me.menuStripToolsEnableUpdate.Name = "menuStripToolsEnableUpdate"
-        Me.menuStripToolsEnableUpdate.Size = New System.Drawing.Size(205, 22)
-        Me.menuStripToolsEnableUpdate.Text = "Enable Update Check"
-        '
         'FactorioInstanceManager
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -310,4 +337,8 @@ Partial Class FactorioInstanceManager
     Friend WithEvents menuStripToolsSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents menuStripToolsSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents menuStripToolsEnableUpdate As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents menuStripEditSeparator1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents menuStripEditSelectAll As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents menuStripEditDeselectAll As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents menuStripEditInvertSelection As System.Windows.Forms.ToolStripMenuItem
 End Class
