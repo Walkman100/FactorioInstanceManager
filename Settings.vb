@@ -144,7 +144,7 @@ Public Class Settings
             For Each install As Install In Installs
                 writer.WriteStartElement("Install")
                 writer.WriteAttributeString("path", install.Path)
-                writer.WriteAttributeString("version", install.Version.ToString())
+                writer.WriteAttributeString("version", install.Version?.ToString())
                 writer.WriteEndElement()
             Next
             writer.WriteEndElement() ' Installs

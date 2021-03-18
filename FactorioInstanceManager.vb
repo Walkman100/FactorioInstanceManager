@@ -1,6 +1,7 @@
 Imports System
 Imports System.IO
 Imports System.Linq
+Imports System.Threading.Tasks
 Imports System.Windows.Forms
 
 Public Class FactorioInstanceManager
@@ -57,6 +58,35 @@ Public Class FactorioInstanceManager
     Private Sub FactorioInstanceManager_ResizeEnd() Handles MyBase.ResizeEnd
         Settings.SaveSettings()
     End Sub
+
+    Private Async Function UpdateInfo() As Task
+        For Each item As ListViewItem In lstInstalls.Items
+            Dim install As Settings.Install = GetInstall(item)
+
+            Dim installVersion As Version = Nothing
+            Try
+                installVersion = Await Task.Run(Function() General.GetInstallVersion(install.Path))
+            Catch : End Try
+            install.Version = installVersion
+
+            ' UpdateInstallItem runs GetInstallCurrentInstance, which accesses files
+            Await Task.Run(Sub() UpdateInstallItem(item, install))
+        Next
+
+        For Each item As ListViewItem In lstInstances.Items
+            Dim instance As Settings.Instance = GetInstance(item)
+
+            Dim instanceVersion As Version = Nothing
+            Try
+                instanceVersion = Await Task.Run(Function() General.GetInstanceVersion(instance.Path))
+            Catch : End Try
+            instance.Version = instanceVersion
+
+            UpdateInstanceItem(item, instance)
+        Next
+
+        UpdateSettingsItems()
+    End Function
 
 #Region "Install Helpers"
     Public Shared Function GetInstall(item As ListViewItem) As Settings.Install
@@ -186,7 +216,7 @@ Public Class FactorioInstanceManager
         Application.Exit()
     End Sub
 
-    Private Sub menuStripEditSetInstallInstance_Click() Handles menuStripEditSetInstallInstance.Click
+    Private Async Sub menuStripEditSetInstallInstance_Click() Handles menuStripEditSetInstallInstance.Click
         If lstInstances.SelectedItems.Count <> 1 Then
             MessageBox.Show("Select One Instance to apply!", "Error Setting Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
@@ -195,7 +225,7 @@ Public Class FactorioInstanceManager
         Dim instancePath As String = GetInstance(lstInstances.SelectedItems(0)).Path
         For Each install As Settings.Install In lstInstalls.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstall)
             Try
-                General.SetInstallCurrentInstance(install.Path, instancePath)
+                Await Task.Run(Sub() General.SetInstallCurrentInstance(install.Path, instancePath))
             Catch ex As FileNotFoundException
                 MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                 "Error Setting Install Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -203,6 +233,8 @@ Public Class FactorioInstanceManager
                 WalkmanLib.ErrorDialog(ex, "Error Setting Install Instance!" & Environment.NewLine)
             End Try
         Next
+
+        Await UpdateInfo()
     End Sub
 
     Private Sub menuStripToolsScan_Click() Handles menuStripToolsScan.Click
@@ -235,6 +267,9 @@ Public Class FactorioInstanceManager
         Else
             MessageBox.Show("Could not find Factorio Steam install!")
         End If
+    End Sub
+    Private Async Sub menuStripToolsUpdate_Click() Handles menuStripToolsUpdate.Click
+        Await UpdateInfo()
     End Sub
     Private Sub menuStripToolsSetDefaultInstancePath_Click() Handles menuStripToolsSetDefaultInstancePath.Click
         If Helpers.SelectFolderDialog(Settings.DefaultInstancePath, "Select Default Instance Path", False) = DialogResult.OK Then
