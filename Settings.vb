@@ -52,6 +52,7 @@ Public Class Settings
     Public Shared Property WindowMaximised As Boolean
     Public Shared Property WindowWidth As Integer
     Public Shared Property WindowHeight As Integer
+    Public Shared Property DisableUpdateCheck As Boolean
 
     ' make sure _defaultInstancePath always has at least a space, to prevent XML saving/loading issues
     Private Shared _defaultInstancePath As String = " "
@@ -91,6 +92,9 @@ Public Class Settings
                             Case "WindowHeight"
                                 reader.Read()
                                 Integer.TryParse(reader.Value, WindowHeight)
+                            Case "DisableUpdateCheck"
+                                reader.Read()
+                                Boolean.TryParse(reader.Value, DisableUpdateCheck)
                             Case "DefaultInstancePath"
                                 reader.Read()
                                 DefaultInstancePath = reader.Value
@@ -137,6 +141,7 @@ Public Class Settings
             writer.WriteElementString("WindowMaximised", WindowMaximised.ToString())
             writer.WriteElementString("WindowWidth", WindowWidth.ToString())
             writer.WriteElementString("WindowHeight", WindowHeight.ToString())
+            writer.WriteElementString("DisableUpdateCheck", DisableUpdateCheck.ToString())
             writer.WriteElementString("DefaultInstancePath", _defaultInstancePath)
             writer.WriteEndElement() ' Settings
 

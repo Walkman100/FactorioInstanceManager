@@ -37,6 +37,9 @@ Partial Class FactorioInstanceManager
         Me.menuStripTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripToolsScan = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripToolsDetectInstall = New System.Windows.Forms.ToolStripMenuItem()
+        Me.menuStripToolsSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.menuStripToolsUpdate = New System.Windows.Forms.ToolStripMenuItem()
+        Me.menuStripToolsSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.menuStripToolsSetDefaultInstancePath = New System.Windows.Forms.ToolStripMenuItem()
         Me.scMain = New System.Windows.Forms.SplitContainer()
         Me.lstInstalls = New System.Windows.Forms.ListView()
@@ -47,9 +50,7 @@ Partial Class FactorioInstanceManager
         Me.colHeadInstancesPath = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.colHeadInstancesVersion = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.colHeadInstancesIconPath = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.menuStripToolsUpdate = New System.Windows.Forms.ToolStripMenuItem()
-        Me.menuStripToolsSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.menuStripToolsSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.menuStripToolsEnableUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripMain.SuspendLayout()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scMain.Panel1.SuspendLayout()
@@ -134,7 +135,7 @@ Partial Class FactorioInstanceManager
         '
         'menuStripTools
         '
-        Me.menuStripTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuStripToolsScan, Me.menuStripToolsDetectInstall, Me.menuStripToolsSeparator1, Me.menuStripToolsUpdate, Me.menuStripToolsSeparator2, Me.menuStripToolsSetDefaultInstancePath})
+        Me.menuStripTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuStripToolsScan, Me.menuStripToolsDetectInstall, Me.menuStripToolsSeparator1, Me.menuStripToolsUpdate, Me.menuStripToolsSeparator2, Me.menuStripToolsSetDefaultInstancePath, Me.menuStripToolsEnableUpdate})
         Me.menuStripTools.Name = "menuStripTools"
         Me.menuStripTools.Size = New System.Drawing.Size(46, 20)
         Me.menuStripTools.Text = "&Tools"
@@ -150,6 +151,22 @@ Partial Class FactorioInstanceManager
         Me.menuStripToolsDetectInstall.Name = "menuStripToolsDetectInstall"
         Me.menuStripToolsDetectInstall.Size = New System.Drawing.Size(205, 22)
         Me.menuStripToolsDetectInstall.Text = "Detect Steam Install"
+        '
+        'menuStripToolsSeparator1
+        '
+        Me.menuStripToolsSeparator1.Name = "menuStripToolsSeparator1"
+        Me.menuStripToolsSeparator1.Size = New System.Drawing.Size(202, 6)
+        '
+        'menuStripToolsUpdate
+        '
+        Me.menuStripToolsUpdate.Name = "menuStripToolsUpdate"
+        Me.menuStripToolsUpdate.Size = New System.Drawing.Size(205, 22)
+        Me.menuStripToolsUpdate.Text = "Update Versions"
+        '
+        'menuStripToolsSeparator2
+        '
+        Me.menuStripToolsSeparator2.Name = "menuStripToolsSeparator2"
+        Me.menuStripToolsSeparator2.Size = New System.Drawing.Size(202, 6)
         '
         'menuStripToolsSetDefaultInstancePath
         '
@@ -235,21 +252,12 @@ Partial Class FactorioInstanceManager
         Me.colHeadInstancesIconPath.Text = "Icon Path"
         Me.colHeadInstancesIconPath.Width = 300
         '
-        'menuStripToolsUpdate
+        'menuStripToolsEnableUpdate
         '
-        Me.menuStripToolsUpdate.Name = "menuStripToolsUpdate"
-        Me.menuStripToolsUpdate.Size = New System.Drawing.Size(205, 22)
-        Me.menuStripToolsUpdate.Text = "Update Versions"
-        '
-        'menuStripToolsSeparator1
-        '
-        Me.menuStripToolsSeparator1.Name = "menuStripToolsSeparator1"
-        Me.menuStripToolsSeparator1.Size = New System.Drawing.Size(202, 6)
-        '
-        'menuStripToolsSeparator2
-        '
-        Me.menuStripToolsSeparator2.Name = "menuStripToolsSeparator2"
-        Me.menuStripToolsSeparator2.Size = New System.Drawing.Size(202, 6)
+        Me.menuStripToolsEnableUpdate.CheckOnClick = True
+        Me.menuStripToolsEnableUpdate.Name = "menuStripToolsEnableUpdate"
+        Me.menuStripToolsEnableUpdate.Size = New System.Drawing.Size(205, 22)
+        Me.menuStripToolsEnableUpdate.Text = "Enable Update Check"
         '
         'FactorioInstanceManager
         '
@@ -301,4 +309,5 @@ Partial Class FactorioInstanceManager
     Friend WithEvents menuStripToolsUpdate As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents menuStripToolsSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents menuStripToolsSeparator2 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents menuStripToolsEnableUpdate As System.Windows.Forms.ToolStripMenuItem
 End Class

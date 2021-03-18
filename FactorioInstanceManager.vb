@@ -18,6 +18,8 @@ Public Class FactorioInstanceManager
 
         If Settings.WindowMaximised Then Me.WindowState = FormWindowState.Maximized
 
+        menuStripToolsEnableUpdate.Checked = Not Settings.DisableUpdateCheck
+
         For Each install As Settings.Install In Settings.Installs
             lstInstalls.Items.Add(CreateInstallItem(install))
         Next
@@ -273,6 +275,12 @@ Public Class FactorioInstanceManager
     End Sub
     Private Sub menuStripToolsSetDefaultInstancePath_Click() Handles menuStripToolsSetDefaultInstancePath.Click
         If Helpers.SelectFolderDialog(Settings.DefaultInstancePath, "Select Default Instance Path", False) = DialogResult.OK Then
+            Settings.SaveSettings()
+        End If
+    End Sub
+    Private Sub menuStripToolsEnableUpdate_CheckedChanged() Handles menuStripToolsEnableUpdate.CheckedChanged
+        If _settingsLoaded Then
+            Settings.DisableUpdateCheck = Not menuStripToolsEnableUpdate.Checked
             Settings.SaveSettings()
         End If
     End Sub
