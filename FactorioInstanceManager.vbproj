@@ -66,6 +66,12 @@
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Properties\Application.vb" />
     <Compile Include="Settings.vb" />
+    <Compile Include="WalkmanLib\CustomMsgBox.Designer.vb">
+      <DependentUpon>CustomMsgBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WalkmanLib\CustomMsgBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WalkmanLib\WalkmanLibDotNet.vb" />
     <Compile Include="WalkmanLib\WalkmanLibUpdates.vb" />
     <Compile Include="WalkmanLib\WalkmanLibWin32.vb" />
@@ -82,6 +88,11 @@
       <Project>{779E62B3-C5A6-494D-9D87-96C0DEC7FFB0}</Project>
       <Name>Ookii.Dialogs</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WalkmanLib\CustomMsgBox.resx">
+      <DependentUpon>CustomMsgBox.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

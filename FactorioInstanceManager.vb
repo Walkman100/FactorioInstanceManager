@@ -19,6 +19,10 @@ Public Class FactorioInstanceManager
         If Settings.WindowMaximised Then Me.WindowState = FormWindowState.Maximized
 
         menuStripToolsEnableUpdate.Checked = Not Settings.DisableUpdateCheck
+        If Not Settings.DisableUpdateCheck Then
+            WalkmanLib.CheckIfUpdateAvailableInBackground("FactorioInstanceManager", My.Application.Info.Version,
+                                                          New ComponentModel.RunWorkerCompletedEventHandler(AddressOf UpdateCheckComplete))
+        End If
 
         For Each install As Settings.Install In Settings.Installs
             lstInstalls.Items.Add(CreateInstallItem(install))
@@ -30,6 +34,27 @@ Public Class FactorioInstanceManager
         _settingsLoaded = True
 
         lstItemSelectionChanged()
+    End Sub
+
+    Private Sub UpdateCheckComplete(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs)
+        If Not Settings.DisableUpdateCheck Then
+            If e.Error Is Nothing Then
+                If DirectCast(e.Result, Boolean) Then
+                    Select Case WalkmanLib.CustomMsgBox("An update is available!", "Update Check", "Go to Download page", "Disable Update Check",
+                                                        "Ignore", MessageBoxIcon.Information, ownerForm:=Me)
+                        Case "Go to Download page"
+                            Diagnostics.Process.Start("https://github.com/Walkman100/FactorioInstanceManager/releases/latest")
+                        Case "Disable Update Check"
+                            menuStripToolsEnableUpdate.Checked = False
+                    End Select
+                End If
+            Else
+                If WalkmanLib.CustomMsgBox("Update check failed!" & Environment.NewLine & e.Error.Message, "Update Check", "OK",
+                                           "Disable Update Check", style:=MessageBoxIcon.Exclamation, ownerForm:=Me) = "Disable Update Check" Then
+                    menuStripToolsEnableUpdate.Checked = False
+                End If
+            End If
+        End If
     End Sub
 
     Private Sub UpdateSettingsItems()
