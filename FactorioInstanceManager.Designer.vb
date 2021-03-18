@@ -81,47 +81,54 @@ Partial Class FactorioInstanceManager
         'menuStripFileAddInstance
         '
         Me.menuStripFileAddInstance.Name = "menuStripFileAddInstance"
-        Me.menuStripFileAddInstance.Size = New System.Drawing.Size(196, 22)
+        Me.menuStripFileAddInstance.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.menuStripFileAddInstance.Size = New System.Drawing.Size(220, 22)
         Me.menuStripFileAddInstance.Text = "Add Instance"
         '
         'menuStripFileAddInstall
         '
         Me.menuStripFileAddInstall.Name = "menuStripFileAddInstall"
-        Me.menuStripFileAddInstall.Size = New System.Drawing.Size(196, 22)
+        Me.menuStripFileAddInstall.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.menuStripFileAddInstall.Size = New System.Drawing.Size(220, 22)
         Me.menuStripFileAddInstall.Text = "Add Install"
         '
         'menuStripFileRemoveSelected
         '
         Me.menuStripFileRemoveSelected.Name = "menuStripFileRemoveSelected"
-        Me.menuStripFileRemoveSelected.Size = New System.Drawing.Size(196, 22)
+        Me.menuStripFileRemoveSelected.ShortcutKeys = System.Windows.Forms.Keys.Delete
+        Me.menuStripFileRemoveSelected.Size = New System.Drawing.Size(220, 22)
         Me.menuStripFileRemoveSelected.Text = "Remove Selected Items"
         '
         'menuStripFileSeparator1
         '
         Me.menuStripFileSeparator1.Name = "menuStripFileSeparator1"
-        Me.menuStripFileSeparator1.Size = New System.Drawing.Size(193, 6)
+        Me.menuStripFileSeparator1.Size = New System.Drawing.Size(217, 6)
         '
         'menuStripFileCreateInstance
         '
         Me.menuStripFileCreateInstance.Name = "menuStripFileCreateInstance"
-        Me.menuStripFileCreateInstance.Size = New System.Drawing.Size(196, 22)
+        Me.menuStripFileCreateInstance.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
+        Me.menuStripFileCreateInstance.Size = New System.Drawing.Size(220, 22)
         Me.menuStripFileCreateInstance.Text = "Create Instance"
         '
         'menuStripFileDeleteInstance
         '
         Me.menuStripFileDeleteInstance.Name = "menuStripFileDeleteInstance"
-        Me.menuStripFileDeleteInstance.Size = New System.Drawing.Size(196, 22)
+        Me.menuStripFileDeleteInstance.ShortcutKeys = CType((System.Windows.Forms.Keys.Shift Or System.Windows.Forms.Keys.Delete), System.Windows.Forms.Keys)
+        Me.menuStripFileDeleteInstance.Size = New System.Drawing.Size(220, 22)
         Me.menuStripFileDeleteInstance.Text = "Delete Instance"
         '
         'menuStripFileSeparator2
         '
         Me.menuStripFileSeparator2.Name = "menuStripFileSeparator2"
-        Me.menuStripFileSeparator2.Size = New System.Drawing.Size(193, 6)
+        Me.menuStripFileSeparator2.Size = New System.Drawing.Size(217, 6)
         '
         'menuStripFileExit
         '
         Me.menuStripFileExit.Name = "menuStripFileExit"
-        Me.menuStripFileExit.Size = New System.Drawing.Size(196, 22)
+        Me.menuStripFileExit.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Q), System.Windows.Forms.Keys)
+        Me.menuStripFileExit.Size = New System.Drawing.Size(220, 22)
         Me.menuStripFileExit.Text = "Exit"
         '
         'menuStripEdit
@@ -134,6 +141,7 @@ Partial Class FactorioInstanceManager
         'menuStripEditSetInstallInstance
         '
         Me.menuStripEditSetInstallInstance.Name = "menuStripEditSetInstallInstance"
+        Me.menuStripEditSetInstallInstance.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
         Me.menuStripEditSetInstallInstance.Size = New System.Drawing.Size(253, 22)
         Me.menuStripEditSetInstallInstance.Text = "Set Install's active instance"
         '
@@ -145,18 +153,23 @@ Partial Class FactorioInstanceManager
         'menuStripEditSelectAll
         '
         Me.menuStripEditSelectAll.Name = "menuStripEditSelectAll"
+        Me.menuStripEditSelectAll.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
         Me.menuStripEditSelectAll.Size = New System.Drawing.Size(253, 22)
         Me.menuStripEditSelectAll.Text = "Select All"
         '
         'menuStripEditDeselectAll
         '
         Me.menuStripEditDeselectAll.Name = "menuStripEditDeselectAll"
+        Me.menuStripEditDeselectAll.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
         Me.menuStripEditDeselectAll.Size = New System.Drawing.Size(253, 22)
         Me.menuStripEditDeselectAll.Text = "Deselect All"
         '
         'menuStripEditInvertSelection
         '
         Me.menuStripEditInvertSelection.Name = "menuStripEditInvertSelection"
+        Me.menuStripEditInvertSelection.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Alt) _
+            Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
         Me.menuStripEditInvertSelection.Size = New System.Drawing.Size(253, 22)
         Me.menuStripEditInvertSelection.Text = "Invert Selection"
         '
@@ -170,35 +183,37 @@ Partial Class FactorioInstanceManager
         'menuStripToolsScan
         '
         Me.menuStripToolsScan.Name = "menuStripToolsScan"
-        Me.menuStripToolsScan.Size = New System.Drawing.Size(205, 22)
+        Me.menuStripToolsScan.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F), System.Windows.Forms.Keys)
+        Me.menuStripToolsScan.Size = New System.Drawing.Size(209, 22)
         Me.menuStripToolsScan.Text = "Scan for Instances"
         '
         'menuStripToolsDetectInstall
         '
         Me.menuStripToolsDetectInstall.Name = "menuStripToolsDetectInstall"
-        Me.menuStripToolsDetectInstall.Size = New System.Drawing.Size(205, 22)
+        Me.menuStripToolsDetectInstall.Size = New System.Drawing.Size(209, 22)
         Me.menuStripToolsDetectInstall.Text = "Detect Steam Install"
         '
         'menuStripToolsSeparator1
         '
         Me.menuStripToolsSeparator1.Name = "menuStripToolsSeparator1"
-        Me.menuStripToolsSeparator1.Size = New System.Drawing.Size(202, 6)
+        Me.menuStripToolsSeparator1.Size = New System.Drawing.Size(206, 6)
         '
         'menuStripToolsUpdate
         '
         Me.menuStripToolsUpdate.Name = "menuStripToolsUpdate"
-        Me.menuStripToolsUpdate.Size = New System.Drawing.Size(205, 22)
+        Me.menuStripToolsUpdate.ShortcutKeys = System.Windows.Forms.Keys.F5
+        Me.menuStripToolsUpdate.Size = New System.Drawing.Size(209, 22)
         Me.menuStripToolsUpdate.Text = "Update Versions"
         '
         'menuStripToolsSeparator2
         '
         Me.menuStripToolsSeparator2.Name = "menuStripToolsSeparator2"
-        Me.menuStripToolsSeparator2.Size = New System.Drawing.Size(202, 6)
+        Me.menuStripToolsSeparator2.Size = New System.Drawing.Size(206, 6)
         '
         'menuStripToolsSetDefaultInstancePath
         '
         Me.menuStripToolsSetDefaultInstancePath.Name = "menuStripToolsSetDefaultInstancePath"
-        Me.menuStripToolsSetDefaultInstancePath.Size = New System.Drawing.Size(205, 22)
+        Me.menuStripToolsSetDefaultInstancePath.Size = New System.Drawing.Size(209, 22)
         Me.menuStripToolsSetDefaultInstancePath.Text = "Set Default Instance Path"
         '
         'menuStripToolsEnableUpdate
