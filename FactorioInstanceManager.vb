@@ -25,6 +25,7 @@ Public Class FactorioInstanceManager
         End If
 
         lstInstalls.SmallImageList = New ImageList() With {.ColorDepth = ColorDepth.Depth32Bit, .ImageSize = New Drawing.Size(16, 16)}
+        lstInstances.SmallImageList = New ImageList() With {.ColorDepth = ColorDepth.Depth32Bit, .ImageSize = New Drawing.Size(16, 16)}
 
         For Each install As Settings.Install In Settings.Installs
             lstInstalls.Items.Add(CreateInstallItem(install))
@@ -123,7 +124,8 @@ Public Class FactorioInstanceManager
         Catch : End Try
         instance.Version = instanceVersion
 
-        UpdateInstanceItem(item, instance)
+        ' UpdateInstanceItem gets image from file and resizes
+        Await Task.Run(Sub() UpdateInstanceItem(item, instance))
     End Function
 
 #Region "Install Helpers"
@@ -155,14 +157,21 @@ Public Class FactorioInstanceManager
         Return DirectCast(item.Tag, Settings.Instance)
     End Function
 
-    Public Shared Function CreateInstanceItem(instance As Settings.Instance) As ListViewItem
+    Public Function CreateInstanceItem(instance As Settings.Instance) As ListViewItem
         Return UpdateInstanceItem(New ListViewItem({"", "", ""}), instance)
     End Function
 
-    Public Shared Function UpdateInstanceItem(item As ListViewItem, instance As Settings.Instance) As ListViewItem
+    Public Function UpdateInstanceItem(item As ListViewItem, instance As Settings.Instance) As ListViewItem
         item.SubItems(0).Text = instance.Path
         item.SubItems(1).Text = instance.Version?.ToString()
         item.SubItems(2).Text = instance.IconPath
+        Try
+            Dim img As Drawing.Image = Drawing.Image.FromFile(instance.IconPath)
+            img = Helpers.ResizeImage(img, lstInstances.SmallImageList.ImageSize.Width)
+
+            lstInstances.SmallImageList.Images.Add(instance.Path, img)
+            item.ImageKey = instance.Path
+        Catch : End Try
         item.Tag = instance
         Return item
     End Function
@@ -420,6 +429,9 @@ Public Class FactorioInstanceManager
             Next
         End If
     End Sub
+    Private Sub ctxMainDelete_Click() Handles ctxMainDelete.Click
+        menuStripFileDeleteInstance.PerformClick()
+    End Sub
     Private Sub ctxMainReplace_Click() Handles ctxMainReplace.Click
         If ctxMain.SourceControl Is lstInstalls Then
             For Each item As ListViewItem In lstInstalls.SelectedItems
@@ -485,9 +497,6 @@ Public Class FactorioInstanceManager
             Next
             UpdateSettingsItems()
         End If
-    End Sub
-    Private Sub ctxMainDelete_Click() Handles ctxMainDelete.Click
-        menuStripFileDeleteInstance.PerformClick()
     End Sub
 #End Region
 End Class
