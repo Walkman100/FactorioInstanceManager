@@ -139,6 +139,30 @@ Namespace General
             Helpers.WriteAllLines(instanceConfigPath, configContents, Microsoft.VisualBasic.vbLf)
         End Sub
 
+        Function FindInstallExe(installPath As String) As String
+            Dim winExePath64 As String = Path.Combine(installPath, "bin", "x64", "factorio.exe")
+            Dim winExePath32 As String = Path.Combine(installPath, "bin", "x86", "factorio.exe")
+            Dim linExePath64 As String = Path.Combine(installPath, "bin", "x64", "factorio")
+            Dim linExePath32 As String = Path.Combine(installPath, "bin", "x86", "factorio")
+            Dim macExePath As String = Path.Combine(installPath, "MacOS", "factorio")
+
+            Select Case Helpers.GetOS()
+                Case OS.Windows
+                    If File.Exists(winExePath64) Then Return winExePath64
+                    If File.Exists(winExePath32) Then Return winExePath32
+                Case OS.Linux
+                    If File.Exists(linExePath64) Then Return linExePath64
+                    If File.Exists(linExePath32) Then Return linExePath32
+                Case OS.Other
+                    If File.Exists(macExePath) Then Return macExePath
+                    ' check Linux paths anyway, just in case
+                    If File.Exists(linExePath64) Then Return linExePath64
+                    If File.Exists(linExePath32) Then Return linExePath32
+            End Select
+
+            Throw New FileNotFoundException("Executable not found!")
+        End Function
+
         Function FindSteamInstall() As String
             'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 427520\InstallLocation
             Dim keyPath As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 427520"

@@ -7,6 +7,7 @@ Imports System.Windows.Forms
 
 Enum OS
     Windows
+    Linux
     Other
 End Enum
 
@@ -21,7 +22,13 @@ Public Class Helpers
     End Sub
 
     Friend Shared Function GetOS() As OS
-        Return If(Environment.GetEnvironmentVariable("OS") = "Windows_NT", OS.Windows, OS.Other)
+        If Environment.GetEnvironmentVariable("OS") = "Windows_NT" Then
+            Return OS.Windows
+        ElseIf WalkmanLib.RunAndGetOutput("uname") = "Linux" Then
+            Return OS.Linux
+        Else
+            Return OS.Other
+        End If
     End Function
 
     Public Shared Function GetInput(ByRef input As String, Optional windowTitle As String = "",

@@ -403,7 +403,16 @@ Public Class FactorioInstanceManager
         End If
     End Sub
     Private Sub ctxMainRun_Click() Handles ctxMainRun.Click
-
+        If ctxMain.SourceControl Is lstInstalls Then
+            For Each item As Settings.Install In lstInstalls.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstall)
+                Try
+                    Diagnostics.Process.Start(General.FindInstallExe(item.Path))
+                Catch ex As Exception
+                    MessageBox.Show($"Error launching install at {item.Path}:{Environment.NewLine}{ex.Message}",
+                                    "Error Launching Factorio", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                End Try
+            Next
+        End If
     End Sub
     Private Sub ctxMainReplace_Click() Handles ctxMainReplace.Click
         If ctxMain.SourceControl Is lstInstalls Then
