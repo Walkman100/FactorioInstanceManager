@@ -89,31 +89,39 @@ Public Class FactorioInstanceManager
 
     Private Async Function UpdateInfo() As Task
         For Each item As ListViewItem In lstInstalls.Items
-            Dim install As Settings.Install = GetInstall(item)
-
-            Dim installVersion As Version = Nothing
-            Try
-                installVersion = Await Task.Run(Function() General.GetInstallVersion(install.Path))
-            Catch : End Try
-            install.Version = installVersion
-
-            ' UpdateInstallItem runs GetInstallCurrentInstance, which accesses files
-            Await Task.Run(Sub() UpdateInstallItem(item, install))
+            Await UpdateInstallInfo(item)
         Next
 
         For Each item As ListViewItem In lstInstances.Items
-            Dim instance As Settings.Instance = GetInstance(item)
-
-            Dim instanceVersion As Version = Nothing
-            Try
-                instanceVersion = Await Task.Run(Function() General.GetInstanceVersion(instance.Path))
-            Catch : End Try
-            instance.Version = instanceVersion
-
-            UpdateInstanceItem(item, instance)
+            Await UpdateInstanceInfo(item)
         Next
 
         UpdateSettingsItems()
+    End Function
+
+    Private Async Function UpdateInstallInfo(item As ListViewItem) As Task
+        Dim install As Settings.Install = GetInstall(item)
+
+        Dim installVersion As Version = Nothing
+        Try
+            installVersion = Await Task.Run(Function() General.GetInstallVersion(install.Path))
+        Catch : End Try
+        install.Version = installVersion
+
+        ' UpdateInstallItem runs GetInstallCurrentInstance, which accesses files
+        Await Task.Run(Sub() UpdateInstallItem(item, install))
+    End Function
+
+    Private Async Function UpdateInstanceInfo(item As ListViewItem) As Task
+        Dim instance As Settings.Instance = GetInstance(item)
+
+        Dim instanceVersion As Version = Nothing
+        Try
+            instanceVersion = Await Task.Run(Function() General.GetInstanceVersion(instance.Path))
+        Catch : End Try
+        instance.Version = instanceVersion
+
+        UpdateInstanceItem(item, instance)
     End Function
 
 #Region "Install Helpers"
@@ -441,13 +449,30 @@ Public Class FactorioInstanceManager
         End If
     End Sub
     Private Async Sub ctxMainUpdate_Click() Handles ctxMainUpdate.Click
+        If ctxMain.SourceControl Is lstInstalls Then
+            For Each item As ListViewItem In lstInstalls.SelectedItems
+                Await UpdateInstallInfo(item)
+            Next
+            UpdateSettingsItems()
+        End If
 
+        If ctxMain.SourceControl Is lstInstances Then
+            For Each item As ListViewItem In lstInstances.SelectedItems
+                Await UpdateInstanceInfo(item)
+            Next
+            UpdateSettingsItems()
+        End If
     End Sub
     Private Sub ctxMainRemove_Click() Handles ctxMainRemove.Click
-
+        If TypeOf ctxMain.SourceControl Is ListView Then
+            For Each item As ListViewItem In DirectCast(ctxMain.SourceControl, ListView).SelectedItems
+                item.Remove()
+            Next
+            UpdateSettingsItems()
+        End If
     End Sub
     Private Sub ctxMainDelete_Click() Handles ctxMainDelete.Click
-
+        menuStripFileDeleteInstance.PerformClick()
     End Sub
 #End Region
 End Class
