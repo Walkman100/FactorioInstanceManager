@@ -365,8 +365,11 @@ Public Class FactorioInstanceManager
     End Sub
 
     Private Sub ListViews_KeyUp(sender As Object, e As KeyEventArgs) Handles lstInstalls.KeyUp, lstInstances.KeyUp
-        If e.KeyData = (Keys.Shift Or Keys.F10) AndAlso DirectCast(sender, ListView).SelectedItems.Count > 0 Then
-            ShowContext(DirectCast(sender, ListView), New Drawing.Point(0, 0))
+        If e.KeyData = (Keys.Shift Or Keys.F10) OrElse e.KeyData = Keys.Apps Then
+            If DirectCast(sender, ListView).SelectedItems.Count > 0 Then
+                ShowContext(DirectCast(sender, ListView), New Drawing.Point(0, 0))
+            End If
+            e.Handled = True
         End If
     End Sub
 
@@ -395,7 +398,47 @@ Public Class FactorioInstanceManager
 
     End Sub
     Private Sub ctxMainReplace_Click() Handles ctxMainReplace.Click
+        If ctxMain.SourceControl Is lstInstalls Then
+            For Each item As ListViewItem In lstInstalls.SelectedItems
+                Dim install As Settings.Install = GetInstall(item)
 
+                Dim selectedPath As String = install.Path
+                If Helpers.SelectFolderDialog(selectedPath, "Select Install Folder", False) = DialogResult.OK Then
+                    Try
+                        install.Version = General.GetInstallVersion(selectedPath)
+                        install.Path = selectedPath
+                        UpdateInstallItem(item, install)
+                    Catch ex As FileNotFoundException
+                        MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                        "Error Updating Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Catch ex As Exception
+                        WalkmanLib.ErrorDialog(ex, "Error Updating Install!" & Environment.NewLine)
+                    End Try
+                End If
+            Next
+            UpdateSettingsItems()
+        End If
+
+        If ctxMain.SourceControl Is lstInstances Then
+            For Each item As ListViewItem In lstInstances.SelectedItems
+                Dim instance As Settings.Instance = GetInstance(item)
+
+                Dim selectedPath As String = instance.Path
+                If Helpers.SelectFolderDialog(selectedPath, "Select Instance Folder", False) = DialogResult.OK Then
+                    Try
+                        instance.Version = General.GetInstanceVersion(selectedPath)
+                        instance.Path = selectedPath
+                        UpdateInstanceItem(item, instance)
+                    Catch ex As FileNotFoundException
+                        MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                        "Error Updating Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Catch ex As Exception
+                        WalkmanLib.ErrorDialog(ex, "Error Updating Instance!" & Environment.NewLine)
+                    End Try
+                End If
+            Next
+            UpdateSettingsItems()
+        End If
     End Sub
     Private Async Sub ctxMainUpdate_Click() Handles ctxMainUpdate.Click
 
