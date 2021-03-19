@@ -1,5 +1,6 @@
 Imports System
 Imports System.Collections.Generic
+Imports System.Drawing
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
@@ -46,6 +47,15 @@ Public Class Helpers
                 Diagnostics.Process.Start("open", $"""{folderPath}""")
         End Select
     End Sub
+
+    Public Shared Function ResizeImage(img As Image, newSize As Integer) As Image
+        Dim rtnImg As New Bitmap(newSize, newSize)
+        Using gr As Graphics = Graphics.FromImage(rtnImg)
+            gr.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
+            gr.DrawImage(img, New Rectangle(0, 0, newSize, newSize), New Rectangle(0, 0, img.Width, img.Height), GraphicsUnit.Pixel)
+        End Using
+        Return rtnImg
+    End Function
 
     Public Shared Function GetInput(ByRef input As String, Optional windowTitle As String = "",
                                     Optional header As String = "", Optional content As String = Nothing) As DialogResult

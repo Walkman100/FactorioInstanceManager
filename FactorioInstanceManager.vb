@@ -24,6 +24,8 @@ Public Class FactorioInstanceManager
                                                           New ComponentModel.RunWorkerCompletedEventHandler(AddressOf UpdateCheckComplete))
         End If
 
+        lstInstalls.SmallImageList = New ImageList() With {.ColorDepth = ColorDepth.Depth32Bit, .ImageSize = New Drawing.Size(16, 16)}
+
         For Each install As Settings.Install In Settings.Installs
             lstInstalls.Items.Add(CreateInstallItem(install))
         Next
@@ -129,16 +131,20 @@ Public Class FactorioInstanceManager
         Return DirectCast(item.Tag, Settings.Install)
     End Function
 
-    Public Shared Function CreateInstallItem(install As Settings.Install) As ListViewItem
+    Public Function CreateInstallItem(install As Settings.Install) As ListViewItem
         Return UpdateInstallItem(New ListViewItem({"", "", ""}), install)
     End Function
 
-    Public Shared Function UpdateInstallItem(item As ListViewItem, install As Settings.Install) As ListViewItem
+    Public Function UpdateInstallItem(item As ListViewItem, install As Settings.Install) As ListViewItem
         item.SubItems(0).Text = install.Path
         item.SubItems(1).Text = install.Version?.ToString()
         Try : item.SubItems(2).Text = General.GetInstallCurrentInstance(install.Path)
         Catch ex As Exception : item.SubItems(2).Text = "Error: " & ex.Message
         End Try
+        Try
+            lstInstalls.SmallImageList.Images.Add(install.Path, General.GetInstallImage(install.Path, lstInstalls.SmallImageList.ImageSize.Width))
+            item.ImageKey = install.Path
+        Catch : End Try
         item.Tag = install
         Return item
     End Function

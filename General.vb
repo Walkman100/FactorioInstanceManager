@@ -32,6 +32,16 @@ Namespace General
             Return version
         End Function
 
+        Friend Function GetInstallImage(instancePath As String, imageSize As Integer) As Drawing.Image
+            Dim installIconPath As String = Path.Combine(instancePath, "data", "core", "graphics", "factorio-icon.png")
+
+            If Not File.Exists(installIconPath) Then
+                Throw New FileNotFoundException("Invalid Install! Missing factorio-icon.png", installIconPath)
+            End If
+
+            Return Helpers.ResizeImage(Drawing.Image.FromFile(installIconPath), imageSize)
+        End Function
+
         Private Const installInstanceConfigCfg As String = "config-path.cfg"
         Private Const installInstanceConfigIni As String = "config.ini"
         Function GetInstallCurrentInstance(installPath As String) As String
