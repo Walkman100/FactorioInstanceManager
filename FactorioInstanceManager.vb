@@ -399,6 +399,7 @@ Public Class FactorioInstanceManager
     Private Sub ShowContext(sender As ListView, location As Drawing.Point)
         ctxMainRun.Visible = sender Is lstInstalls
         ctxMainDelete.Visible = sender Is lstInstances
+        ctxMainSetIcon.Visible = sender Is lstInstances
         ctxMain.Show(sender, location)
     End Sub
 #End Region
@@ -431,6 +432,29 @@ Public Class FactorioInstanceManager
     End Sub
     Private Sub ctxMainDelete_Click() Handles ctxMainDelete.Click
         menuStripFileDeleteInstance.PerformClick()
+    End Sub
+    Private Sub ctxMainSetIcon_Click() Handles ctxMainSetIcon.Click
+        If ctxMain.SourceControl Is lstInstances Then
+            For Each item As ListViewItem In lstInstances.SelectedItems
+                Dim instance As Settings.Instance = GetInstance(item)
+
+                ' Path.Get* doesn't like empty string paths, but null is fine
+                Dim iconPath As String = If(String.IsNullOrWhiteSpace(instance.IconPath), Nothing, instance.IconPath)
+
+                Dim ofd As OpenFileDialog = New OpenFileDialog() With {
+                    .Title = "Select Icon File",
+                    .Filter = "Images|*.png;*.jpg;*.bmp;*.ico;*.gif|All Items|*.*",
+                    .InitialDirectory = If(Path.GetDirectoryName(iconPath), instance.Path),
+                    .FileName = Path.GetFileName(iconPath)
+                }
+
+                If ofd.ShowDialog() = DialogResult.OK Then
+                    instance.IconPath = ofd.FileName
+                    UpdateInstanceItem(item, instance)
+                End If
+            Next
+            UpdateSettingsItems()
+        End If
     End Sub
     Private Sub ctxMainReplace_Click() Handles ctxMainReplace.Click
         If ctxMain.SourceControl Is lstInstalls Then

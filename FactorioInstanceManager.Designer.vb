@@ -59,11 +59,12 @@ Partial Class FactorioInstanceManager
         Me.ctxMain = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ctxMainOpenFolder = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainRun = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainDelete = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ctxMainReplace = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainRemove = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ctxMainDelete = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainSetIcon = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripMain.SuspendLayout()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scMain.Panel1.SuspendLayout()
@@ -313,9 +314,9 @@ Partial Class FactorioInstanceManager
         '
         'ctxMain
         '
-        Me.ctxMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxMainOpenFolder, Me.ctxMainRun, Me.ctxMainDelete, Me.ctxMainSeparator1, Me.ctxMainReplace, Me.ctxMainUpdate, Me.ctxMainRemove})
+        Me.ctxMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxMainOpenFolder, Me.ctxMainRun, Me.ctxMainDelete, Me.ctxMainSeparator1, Me.ctxMainSetIcon, Me.ctxMainReplace, Me.ctxMainUpdate, Me.ctxMainRemove})
         Me.ctxMain.Name = "ctxMain"
-        Me.ctxMain.Size = New System.Drawing.Size(143, 142)
+        Me.ctxMain.Size = New System.Drawing.Size(143, 164)
         '
         'ctxMainOpenFolder
         '
@@ -329,6 +330,12 @@ Partial Class FactorioInstanceManager
         Me.ctxMainRun.Name = "ctxMainRun"
         Me.ctxMainRun.Size = New System.Drawing.Size(142, 22)
         Me.ctxMainRun.Text = "Run"
+        '
+        'ctxMainDelete
+        '
+        Me.ctxMainDelete.Name = "ctxMainDelete"
+        Me.ctxMainDelete.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainDelete.Text = "Delete"
         '
         'ctxMainSeparator1
         '
@@ -353,11 +360,11 @@ Partial Class FactorioInstanceManager
         Me.ctxMainRemove.Size = New System.Drawing.Size(142, 22)
         Me.ctxMainRemove.Text = "Remove"
         '
-        'ctxMainDelete
+        'ctxMainSetIcon
         '
-        Me.ctxMainDelete.Name = "ctxMainDelete"
-        Me.ctxMainDelete.Size = New System.Drawing.Size(142, 22)
-        Me.ctxMainDelete.Text = "Delete"
+        Me.ctxMainSetIcon.Name = "ctxMainSetIcon"
+        Me.ctxMainSetIcon.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainSetIcon.Text = "Set Icon"
         '
         'FactorioInstanceManager
         '
@@ -423,4 +430,5 @@ Partial Class FactorioInstanceManager
     Friend WithEvents ctxMainRemove As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxMainReplace As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxMainDelete As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainSetIcon As System.Windows.Forms.ToolStripMenuItem
 End Class
