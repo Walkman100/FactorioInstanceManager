@@ -31,6 +31,22 @@ Public Class Helpers
         End If
     End Function
 
+    Public Shared Sub OpenFolder(folderPath As String)
+        If Not Directory.Exists(folderPath) Then
+            Throw New DirectoryNotFoundException($"Could not find directory ""{folderPath}""")
+        End If
+
+        Select Case GetOS()
+            Case OS.Windows
+                Diagnostics.Process.Start(folderPath)
+            Case OS.Linux
+                Diagnostics.Process.Start("xdg-open", $"""{folderPath}""")
+            Case OS.Other
+                ' macOS
+                Diagnostics.Process.Start("open", $"""{folderPath}""")
+        End Select
+    End Sub
+
     Public Shared Function GetInput(ByRef input As String, Optional windowTitle As String = "",
                                     Optional header As String = "", Optional content As String = Nothing) As DialogResult
         If OokiiDialogsLoaded() Then
