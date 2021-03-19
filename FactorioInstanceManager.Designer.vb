@@ -22,6 +22,7 @@ Partial Class FactorioInstanceManager
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.menuStripMain = New System.Windows.Forms.MenuStrip()
         Me.menuStripFile = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripFileAddInstance = New System.Windows.Forms.ToolStripMenuItem()
@@ -55,11 +56,20 @@ Partial Class FactorioInstanceManager
         Me.colHeadInstancesPath = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.colHeadInstancesVersion = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.colHeadInstancesIconPath = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ctxMain = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ctxMainOpenFolder = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainRun = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ctxMainReplace = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainUpdate = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainRemove = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainDelete = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripMain.SuspendLayout()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scMain.Panel1.SuspendLayout()
         Me.scMain.Panel2.SuspendLayout()
         Me.scMain.SuspendLayout()
+        Me.ctxMain.SuspendLayout()
         Me.SuspendLayout()
         '
         'menuStripMain
@@ -301,6 +311,54 @@ Partial Class FactorioInstanceManager
         Me.colHeadInstancesIconPath.Text = "Icon Path"
         Me.colHeadInstancesIconPath.Width = 300
         '
+        'ctxMain
+        '
+        Me.ctxMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxMainOpenFolder, Me.ctxMainRun, Me.ctxMainDelete, Me.ctxMainSeparator1, Me.ctxMainReplace, Me.ctxMainUpdate, Me.ctxMainRemove})
+        Me.ctxMain.Name = "ctxMain"
+        Me.ctxMain.Size = New System.Drawing.Size(143, 142)
+        '
+        'ctxMainOpenFolder
+        '
+        Me.ctxMainOpenFolder.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.ctxMainOpenFolder.Name = "ctxMainOpenFolder"
+        Me.ctxMainOpenFolder.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainOpenFolder.Text = "Open Folder"
+        '
+        'ctxMainRun
+        '
+        Me.ctxMainRun.Name = "ctxMainRun"
+        Me.ctxMainRun.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainRun.Text = "Run"
+        '
+        'ctxMainSeparator1
+        '
+        Me.ctxMainSeparator1.Name = "ctxMainSeparator1"
+        Me.ctxMainSeparator1.Size = New System.Drawing.Size(139, 6)
+        '
+        'ctxMainReplace
+        '
+        Me.ctxMainReplace.Name = "ctxMainReplace"
+        Me.ctxMainReplace.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainReplace.Text = "Replace"
+        '
+        'ctxMainUpdate
+        '
+        Me.ctxMainUpdate.Name = "ctxMainUpdate"
+        Me.ctxMainUpdate.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainUpdate.Text = "Update"
+        '
+        'ctxMainRemove
+        '
+        Me.ctxMainRemove.Name = "ctxMainRemove"
+        Me.ctxMainRemove.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainRemove.Text = "Remove"
+        '
+        'ctxMainDelete
+        '
+        Me.ctxMainDelete.Name = "ctxMainDelete"
+        Me.ctxMainDelete.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainDelete.Text = "Delete"
+        '
         'FactorioInstanceManager
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -318,6 +376,7 @@ Partial Class FactorioInstanceManager
         Me.scMain.Panel2.ResumeLayout(False)
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).EndInit()
         Me.scMain.ResumeLayout(False)
+        Me.ctxMain.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -356,4 +415,12 @@ Partial Class FactorioInstanceManager
     Friend WithEvents menuStripEditSelectAll As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents menuStripEditDeselectAll As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents menuStripEditInvertSelection As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMain As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents ctxMainOpenFolder As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainRun As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainSeparator1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxMainUpdate As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainRemove As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainReplace As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainDelete As System.Windows.Forms.ToolStripMenuItem
 End Class

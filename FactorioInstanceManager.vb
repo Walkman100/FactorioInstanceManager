@@ -358,4 +358,25 @@ Public Class FactorioInstanceManager
         End If
     End Sub
 #End Region
+
+#Region "Context Menu Events"
+    Private Sub ctxMainOpenFolder_Click() Handles ctxMainOpenFolder.Click
+
+    End Sub
+    Private Sub ctxMainRun_Click() Handles ctxMainRun.Click
+
+    End Sub
+    Private Sub ctxMainReplace_Click() Handles ctxMainReplace.Click
+
+    End Sub
+    Private Async Sub ctxMainUpdate_Click() Handles ctxMainUpdate.Click
+
+    End Sub
+    Private Sub ctxMainRemove_Click() Handles ctxMainRemove.Click
+
+    End Sub
+    Private Sub ctxMainDelete_Click() Handles ctxMainDelete.Click
+
+    End Sub
+#End Region
 End Class
