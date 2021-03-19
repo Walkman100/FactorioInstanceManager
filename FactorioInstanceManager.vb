@@ -357,11 +357,39 @@ Public Class FactorioInstanceManager
             Next
         End If
     End Sub
+
+    Private Sub ListViews_MouseUp(sender As Object, e As MouseEventArgs) Handles lstInstalls.MouseUp, lstInstances.MouseUp
+        If e.Button = MouseButtons.Right AndAlso DirectCast(sender, ListView).SelectedItems.Count > 0 Then
+            ShowContext(DirectCast(sender, ListView), e.Location)
+        End If
+    End Sub
+
+    Private Sub ListViews_KeyUp(sender As Object, e As KeyEventArgs) Handles lstInstalls.KeyUp, lstInstances.KeyUp
+        If e.KeyData = (Keys.Shift Or Keys.F10) AndAlso DirectCast(sender, ListView).SelectedItems.Count > 0 Then
+            ShowContext(DirectCast(sender, ListView), New Drawing.Point(0, 0))
+        End If
+    End Sub
+
+    Private Sub ShowContext(sender As ListView, location As Drawing.Point)
+        ctxMainRun.Visible = sender Is lstInstalls
+        ctxMainDelete.Visible = sender Is lstInstances
+        ctxMain.Show(sender, location)
+    End Sub
 #End Region
 
 #Region "Context Menu Events"
     Private Sub ctxMainOpenFolder_Click() Handles ctxMainOpenFolder.Click
+        If ctxMain.SourceControl Is lstInstalls Then
+            For Each item As Settings.Install In lstInstalls.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstall)
+                Diagnostics.Process.Start(item.Path)
+            Next
+        End If
 
+        If ctxMain.SourceControl Is lstInstances Then
+            For Each item As Settings.Instance In lstInstances.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstance)
+                Diagnostics.Process.Start(item.Path)
+            Next
+        End If
     End Sub
     Private Sub ctxMainRun_Click() Handles ctxMainRun.Click
 
