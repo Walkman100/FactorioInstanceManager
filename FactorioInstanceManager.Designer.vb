@@ -61,10 +61,10 @@ Partial Class FactorioInstanceManager
         Me.ctxMainRun = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainDelete = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ctxMainSetIcon = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainReplace = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainRemove = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ctxMainSetIcon = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripMain.SuspendLayout()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scMain.Panel1.SuspendLayout()
@@ -342,6 +342,12 @@ Partial Class FactorioInstanceManager
         Me.ctxMainSeparator1.Name = "ctxMainSeparator1"
         Me.ctxMainSeparator1.Size = New System.Drawing.Size(139, 6)
         '
+        'ctxMainSetIcon
+        '
+        Me.ctxMainSetIcon.Name = "ctxMainSetIcon"
+        Me.ctxMainSetIcon.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainSetIcon.Text = "Set Icon"
+        '
         'ctxMainReplace
         '
         Me.ctxMainReplace.Name = "ctxMainReplace"
@@ -360,12 +366,6 @@ Partial Class FactorioInstanceManager
         Me.ctxMainRemove.Size = New System.Drawing.Size(142, 22)
         Me.ctxMainRemove.Text = "Remove"
         '
-        'ctxMainSetIcon
-        '
-        Me.ctxMainSetIcon.Name = "ctxMainSetIcon"
-        Me.ctxMainSetIcon.Size = New System.Drawing.Size(142, 22)
-        Me.ctxMainSetIcon.Text = "Set Icon"
-        '
         'FactorioInstanceManager
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -373,6 +373,7 @@ Partial Class FactorioInstanceManager
         Me.ClientSize = New System.Drawing.Size(801, 480)
         Me.Controls.Add(Me.scMain)
         Me.Controls.Add(Me.menuStripMain)
+        Me.Icon = Global.My.Resources.Resources.factorio_instance_manager
         Me.MainMenuStrip = Me.menuStripMain
         Me.Name = "FactorioInstanceManager"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
