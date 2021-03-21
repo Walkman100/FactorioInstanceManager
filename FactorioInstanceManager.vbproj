@@ -39,6 +39,9 @@
     <ApplicationIcon>Properties\factorio-instance-manager.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FactorioInstanceManager-Ookii.Dialogs">
+      <HintPath>Ookii.Dialogs\FactorioInstanceManager-Ookii.Dialogs.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -93,12 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="WalkmanLib" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Ookii.Dialogs\Ookii.Dialogs.csproj">
-      <Project>{779E62B3-C5A6-494D-9D87-96C0DEC7FFB0}</Project>
-      <Name>Ookii.Dialogs</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
