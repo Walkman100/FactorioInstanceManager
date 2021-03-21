@@ -527,15 +527,24 @@ Public Class FactorioInstanceManager
 
     Private Sub UpdateContextSetMenu()
         ' clear menu
+        For Each item As ToolStripMenuItem In ctxMainSet.DropDownItems.OfType(Of ToolStripMenuItem).ToList() ' so we can remove items
+            If item IsNot ctxMainSetSame AndAlso
+                    item IsNot ctxMainSetMajor AndAlso
+                    item IsNot ctxMainSetAll Then
+                ctxMainSet.DropDownItems.Remove(item)
+            End If
+        Next
 
         If lstInstalls.SelectedItems.Count <> 1 Then Exit Sub
         Dim install As Settings.Install = GetInstall(lstInstalls.SelectedItems(0))
+        If install.Version Is Nothing Then Exit Sub
 
         ' 0.17.79: Major.Minor.Build
 
         Dim InstancesSameVersion = Settings.Instances.Where(Function(i) install.Version = i.Version)
         Dim InstancesSameMajor = Settings.Instances.Where(Function(i) install.Version <> i.Version).
             Where(Function(i)
+                      If i.Version Is Nothing Then Return False
                       If install.Version.Major = 0 Then
                           Return i.Version.Major = 0 AndAlso install.Version.Minor = i.Version.Minor
                       Else
@@ -544,6 +553,7 @@ Public Class FactorioInstanceManager
                   End Function)
         Dim InstancesAllVersions = Settings.Instances.Where(Function(i) install.Version <> i.Version).
             Where(Function(i)
+                      If i.Version Is Nothing Then Return True
                       If install.Version.Major = 0 Then
                           Return i.Version.Major <> 0 OrElse install.Version.Minor <> i.Version.Minor
                       Else
