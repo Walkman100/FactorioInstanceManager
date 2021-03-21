@@ -36,7 +36,7 @@ Public Class FactorioInstanceManager
 
         _settingsLoaded = True
 
-        lstItemSelectionChanged()
+        ListViews_ItemSelectionChanged()
         Dim unused = UpdateInfo()
     End Sub
 
@@ -360,9 +360,10 @@ Public Class FactorioInstanceManager
 #End Region
 
 #Region "ListView Events"
-    Private Sub lstItemSelectionChanged() Handles lstInstalls.ItemSelectionChanged, lstInstances.ItemSelectionChanged
+    Private Sub ListViews_ItemSelectionChanged() Handles lstInstalls.ItemSelectionChanged, lstInstances.ItemSelectionChanged
         menuStripFileRemoveSelected.Enabled = lstInstalls.SelectedItems.Count > 0 OrElse lstInstances.SelectedItems.Count > 0
         menuStripFileDeleteInstance.Enabled = lstInstances.SelectedItems.Count > 0
+        menuStripEditSetInstallInstance.Enabled = lstInstalls.SelectedItems.Count > 0
     End Sub
 
     Private Sub lstInstalls_ItemActivate() Handles lstInstalls.ItemActivate

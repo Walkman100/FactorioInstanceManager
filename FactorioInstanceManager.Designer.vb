@@ -84,7 +84,7 @@ Partial Class FactorioInstanceManager
         Me.menuStripMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuStripFile, Me.menuStripEdit, Me.menuStripTools})
         Me.menuStripMain.Location = New System.Drawing.Point(0, 0)
         Me.menuStripMain.Name = "menuStripMain"
-        Me.menuStripMain.Size = New System.Drawing.Size(801, 24)
+        Me.menuStripMain.Size = New System.Drawing.Size(725, 24)
         Me.menuStripMain.TabIndex = 0
         Me.menuStripMain.Text = "MenuStrip1"
         '
@@ -254,8 +254,8 @@ Partial Class FactorioInstanceManager
         'scMain.Panel2
         '
         Me.scMain.Panel2.Controls.Add(Me.lstInstances)
-        Me.scMain.Size = New System.Drawing.Size(801, 456)
-        Me.scMain.SplitterDistance = 152
+        Me.scMain.Size = New System.Drawing.Size(725, 394)
+        Me.scMain.SplitterDistance = 131
         Me.scMain.TabIndex = 1
         '
         'lstInstalls
@@ -268,14 +268,14 @@ Partial Class FactorioInstanceManager
         Me.lstInstalls.HideSelection = False
         Me.lstInstalls.Location = New System.Drawing.Point(0, 0)
         Me.lstInstalls.Name = "lstInstalls"
-        Me.lstInstalls.Size = New System.Drawing.Size(801, 152)
+        Me.lstInstalls.Size = New System.Drawing.Size(725, 131)
         Me.lstInstalls.TabIndex = 0
         Me.lstInstalls.UseCompatibleStateImageBehavior = False
         Me.lstInstalls.View = System.Windows.Forms.View.Details
         '
         'colHeadInstallsPath
         '
-        Me.colHeadInstallsPath.Text = "Path"
+        Me.colHeadInstallsPath.Text = "Install Path"
         Me.colHeadInstallsPath.Width = 300
         '
         'colHeadInstallsVersion
@@ -298,14 +298,14 @@ Partial Class FactorioInstanceManager
         Me.lstInstances.HideSelection = False
         Me.lstInstances.Location = New System.Drawing.Point(0, 0)
         Me.lstInstances.Name = "lstInstances"
-        Me.lstInstances.Size = New System.Drawing.Size(801, 300)
+        Me.lstInstances.Size = New System.Drawing.Size(725, 259)
         Me.lstInstances.TabIndex = 0
         Me.lstInstances.UseCompatibleStateImageBehavior = False
         Me.lstInstances.View = System.Windows.Forms.View.Details
         '
         'colHeadInstancesPath
         '
-        Me.colHeadInstancesPath.Text = "Path"
+        Me.colHeadInstancesPath.Text = "Instance Path"
         Me.colHeadInstancesPath.Width = 300
         '
         'colHeadInstancesVersion
@@ -417,7 +417,7 @@ Partial Class FactorioInstanceManager
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(801, 480)
+        Me.ClientSize = New System.Drawing.Size(725, 418)
         Me.Controls.Add(Me.scMain)
         Me.Controls.Add(Me.menuStripMain)
         Me.Icon = Global.My.Resources.Resources.factorio_instance_manager
