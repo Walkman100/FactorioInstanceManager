@@ -399,7 +399,9 @@ Public Class FactorioInstanceManager
     Private Sub ShowContext(sender As ListView, location As Drawing.Point)
         ctxMainRun.Visible = sender Is lstInstalls
         ctxMainDelete.Visible = sender Is lstInstances
+        ctxMainSet.Visible = sender Is lstInstalls
         ctxMainSetIcon.Visible = sender Is lstInstances
+        If sender Is lstInstalls Then UpdateContextSetMenu()
         ctxMain.Show(sender, location)
     End Sub
 #End Region
@@ -521,6 +523,51 @@ Public Class FactorioInstanceManager
             Next
             UpdateSettingsItems()
         End If
+    End Sub
+
+    Private Sub UpdateContextSetMenu()
+        ' clear menu
+
+        If lstInstalls.SelectedItems.Count <> 1 Then Exit Sub
+        Dim install As Settings.Install = GetInstall(lstInstalls.SelectedItems(0))
+
+        ' 0.17.79: Major.Minor.Build
+
+        Dim InstancesSameVersion = Settings.Instances.Where(Function(i) install.Version = i.Version)
+        Dim InstancesSameMajor = Settings.Instances.Where(Function(i) install.Version <> i.Version).
+            Where(Function(i)
+                      If install.Version.Major = 0 Then
+                          Return i.Version.Major = 0 AndAlso install.Version.Minor = i.Version.Minor
+                      Else
+                          Return install.Version.Major = i.Version.Major
+                      End If
+                  End Function)
+        Dim InstancesAllVersions = Settings.Instances.Where(Function(i) install.Version <> i.Version).
+            Where(Function(i)
+                      If install.Version.Major = 0 Then
+                          Return i.Version.Major <> 0 OrElse install.Version.Minor <> i.Version.Minor
+                      Else
+                          Return install.Version.Major <> i.Version.Major
+                      End If
+                  End Function)
+
+        Dim sameVersionIndex As Integer = ctxMainSet.DropDownItems.IndexOf(ctxMainSetSame)
+        For i = 0 To InstancesSameVersion.Count - 1
+            Dim instance As Settings.Instance = InstancesSameVersion(i)
+            ctxMainSet.DropDownItems.Insert(sameVersionIndex + i + 1, New ToolStripMenuItem(instance.Path))
+        Next
+
+        Dim sameMajorVersionIndex As Integer = ctxMainSet.DropDownItems.IndexOf(ctxMainSetMajor)
+        For i = 0 To InstancesSameMajor.Count - 1
+            Dim instance As Settings.Instance = InstancesSameMajor(i)
+            ctxMainSet.DropDownItems.Insert(sameMajorVersionIndex + i + 1, New ToolStripMenuItem(instance.Path))
+        Next
+
+        Dim allVersionsIndex As Integer = ctxMainSet.DropDownItems.IndexOf(ctxMainSetAll)
+        For i = 0 To InstancesAllVersions.Count - 1
+            Dim instance As Settings.Instance = InstancesAllVersions(i)
+            ctxMainSet.DropDownItems.Insert(allVersionsIndex + i + 1, New ToolStripMenuItem(instance.Path))
+        Next
     End Sub
 #End Region
 End Class
