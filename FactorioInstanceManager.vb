@@ -525,6 +525,18 @@ Public Class FactorioInstanceManager
         End If
     End Sub
 
+    Private Function CreateToolStripMenuItem(instance As Settings.Instance) As ToolStripMenuItem
+        Dim item As ToolStripMenuItem = New ToolStripMenuItem(instance.Path, Nothing, AddressOf ctxMainSet_SubItem_Click)
+
+        Try
+            Dim img As Drawing.Image = Drawing.Image.FromFile(instance.IconPath)
+            img = Helpers.ResizeImage(img, ctxMain.ImageScalingSize.Width)
+
+            item.Image = img
+        Catch : End Try
+
+        Return item
+    End Function
     Private Sub UpdateContextSetMenu()
         ' clear menu
         For Each item As ToolStripMenuItem In ctxMainSet.DropDownItems.OfType(Of ToolStripMenuItem).ToList() ' so we can remove items
@@ -564,20 +576,38 @@ Public Class FactorioInstanceManager
         Dim sameVersionIndex As Integer = ctxMainSet.DropDownItems.IndexOf(ctxMainSetSame)
         For i = 0 To InstancesSameVersion.Count - 1
             Dim instance As Settings.Instance = InstancesSameVersion(i)
-            ctxMainSet.DropDownItems.Insert(sameVersionIndex + i + 1, New ToolStripMenuItem(instance.Path))
+            ctxMainSet.DropDownItems.Insert(sameVersionIndex + i + 1, CreateToolStripMenuItem(instance))
         Next
 
         Dim sameMajorVersionIndex As Integer = ctxMainSet.DropDownItems.IndexOf(ctxMainSetMajor)
         For i = 0 To InstancesSameMajor.Count - 1
             Dim instance As Settings.Instance = InstancesSameMajor(i)
-            ctxMainSet.DropDownItems.Insert(sameMajorVersionIndex + i + 1, New ToolStripMenuItem(instance.Path))
+            ctxMainSet.DropDownItems.Insert(sameMajorVersionIndex + i + 1, CreateToolStripMenuItem(instance))
         Next
 
         Dim allVersionsIndex As Integer = ctxMainSet.DropDownItems.IndexOf(ctxMainSetAll)
         For i = 0 To InstancesAllVersions.Count - 1
             Dim instance As Settings.Instance = InstancesAllVersions(i)
-            ctxMainSet.DropDownItems.Insert(allVersionsIndex + i + 1, New ToolStripMenuItem(instance.Path))
+            ctxMainSet.DropDownItems.Insert(allVersionsIndex + i + 1, CreateToolStripMenuItem(instance))
         Next
+    End Sub
+
+    Private Async Sub ctxMainSet_SubItem_Click(sender As Object, e As EventArgs)
+        If lstInstalls.SelectedItems.Count <> 1 Then Exit Sub
+        Dim install As Settings.Install = GetInstall(lstInstalls.SelectedItems(0))
+
+        Dim item As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)
+
+        Try
+            Await Task.Run(Sub() General.SetInstallCurrentInstance(install.Path, item.Text))
+        Catch ex As FileNotFoundException
+            MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                "Error Setting Install Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Catch ex As Exception
+            WalkmanLib.ErrorDialog(ex, "Error Setting Install Instance!" & Environment.NewLine)
+        End Try
+
+        Await UpdateInfo()
     End Sub
 #End Region
 End Class
