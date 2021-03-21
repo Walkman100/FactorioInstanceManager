@@ -60,6 +60,12 @@ Partial Class FactorioInstanceManager
         Me.ctxMainOpenFolder = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainRun = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainDelete = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainSet = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainSetSame = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainSetSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ctxMainSetMajor = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMainSetSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ctxMainSetAll = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ctxMainSetIcon = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainReplace = New System.Windows.Forms.ToolStripMenuItem()
@@ -314,9 +320,9 @@ Partial Class FactorioInstanceManager
         '
         'ctxMain
         '
-        Me.ctxMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxMainOpenFolder, Me.ctxMainRun, Me.ctxMainDelete, Me.ctxMainSeparator1, Me.ctxMainSetIcon, Me.ctxMainReplace, Me.ctxMainUpdate, Me.ctxMainRemove})
+        Me.ctxMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxMainOpenFolder, Me.ctxMainRun, Me.ctxMainDelete, Me.ctxMainSet, Me.ctxMainSeparator1, Me.ctxMainSetIcon, Me.ctxMainReplace, Me.ctxMainUpdate, Me.ctxMainRemove})
         Me.ctxMain.Name = "ctxMain"
-        Me.ctxMain.Size = New System.Drawing.Size(143, 164)
+        Me.ctxMain.Size = New System.Drawing.Size(143, 186)
         '
         'ctxMainOpenFolder
         '
@@ -336,6 +342,47 @@ Partial Class FactorioInstanceManager
         Me.ctxMainDelete.Name = "ctxMainDelete"
         Me.ctxMainDelete.Size = New System.Drawing.Size(142, 22)
         Me.ctxMainDelete.Text = "Delete"
+        '
+        'ctxMainSet
+        '
+        Me.ctxMainSet.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxMainSetSame, Me.ctxMainSetSeparator1, Me.ctxMainSetMajor, Me.ctxMainSetSeparator2, Me.ctxMainSetAll})
+        Me.ctxMainSet.Name = "ctxMainSet"
+        Me.ctxMainSet.Size = New System.Drawing.Size(142, 22)
+        Me.ctxMainSet.Text = "Set Instance"
+        '
+        'ctxMainSetSame
+        '
+        Me.ctxMainSetSame.Enabled = False
+        Me.ctxMainSetSame.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.ctxMainSetSame.Name = "ctxMainSetSame"
+        Me.ctxMainSetSame.Size = New System.Drawing.Size(184, 22)
+        Me.ctxMainSetSame.Text = "Same Version"
+        '
+        'ctxMainSetSeparator1
+        '
+        Me.ctxMainSetSeparator1.Name = "ctxMainSetSeparator1"
+        Me.ctxMainSetSeparator1.Size = New System.Drawing.Size(181, 6)
+        '
+        'ctxMainSetMajor
+        '
+        Me.ctxMainSetMajor.Enabled = False
+        Me.ctxMainSetMajor.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.ctxMainSetMajor.Name = "ctxMainSetMajor"
+        Me.ctxMainSetMajor.Size = New System.Drawing.Size(184, 22)
+        Me.ctxMainSetMajor.Text = "Same Major Version"
+        '
+        'ctxMainSetSeparator2
+        '
+        Me.ctxMainSetSeparator2.Name = "ctxMainSetSeparator2"
+        Me.ctxMainSetSeparator2.Size = New System.Drawing.Size(181, 6)
+        '
+        'ctxMainSetAll
+        '
+        Me.ctxMainSetAll.Enabled = False
+        Me.ctxMainSetAll.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.ctxMainSetAll.Name = "ctxMainSetAll"
+        Me.ctxMainSetAll.Size = New System.Drawing.Size(184, 22)
+        Me.ctxMainSetAll.Text = "All Instances"
         '
         'ctxMainSeparator1
         '
@@ -432,4 +479,10 @@ Partial Class FactorioInstanceManager
     Friend WithEvents ctxMainReplace As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxMainDelete As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxMainSetIcon As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainSet As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainSetSeparator1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxMainSetMajor As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainSetSeparator2 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxMainSetSame As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxMainSetAll As System.Windows.Forms.ToolStripMenuItem
 End Class
