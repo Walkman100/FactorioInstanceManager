@@ -10,7 +10,7 @@ Public Class FactorioInstanceManager
         lstInstalls.DoubleBuffered(True)
         lstInstances.DoubleBuffered(True)
 
-        Settings.Init()
+        Dim configFileExisted As Boolean = Settings.Init()
 
         Me.Width = Settings.WindowWidth
         Me.Height = Settings.WindowHeight
@@ -35,6 +35,26 @@ Public Class FactorioInstanceManager
         Next
 
         _settingsLoaded = True
+
+        If Not configFileExisted Then
+            ' detect steam install
+            menuStripToolsDetectInstall.PerformClick()
+
+            ' set default instance folder
+            If Helpers.SelectFolderDialog(Settings.DefaultInstancePath, "Select Default Instance Path", False) = DialogResult.OK Then
+                Settings.SaveSettings()
+
+                ' search instances in default folder
+                For Each path As String In General.FindInstances(Settings.DefaultInstancePath)
+                    Dim instanceVersion As Version = General.GetInstanceVersion(path)
+                    lstInstances.Items.Add(CreateInstanceItem(New Settings.Instance With {
+                                                                  .Path = path,
+                                                                  .Version = instanceVersion
+                                                              }))
+                Next
+                UpdateSettingsItems()
+            End If
+        End If
 
         ListViews_ItemSelectionChanged()
         Dim unused = UpdateInfo()

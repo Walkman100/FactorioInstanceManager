@@ -8,7 +8,7 @@ Public Class Settings
     Private Shared _settingsPath As String
     Private Shared _loaded As Boolean = False
 
-    Public Shared Sub Init()
+    Public Shared Function Init() As Boolean
         Dim configFileName As String = "FactorioInstanceManager.xml"
 
         If Helpers.GetOS() = OS.Windows Then
@@ -33,11 +33,17 @@ Public Class Settings
         WindowWidth = FactorioInstanceManager.Width
         WindowHeight = FactorioInstanceManager.Height
 
-        If File.Exists(_settingsPath) Then
-            LoadSettings()
-        End If
-        _loaded = True
-    End Sub
+        Try
+            If File.Exists(_settingsPath) Then
+                LoadSettings()
+                Return True
+            Else
+                Return False
+            End If
+        Finally
+            _loaded = True
+        End Try
+    End Function
 
     Public Structure Install
         Public Path As String
