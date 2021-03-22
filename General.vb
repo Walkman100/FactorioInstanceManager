@@ -1,6 +1,7 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.IO
+Imports System.Linq
 Imports System.Threading.Tasks
 Imports System.Web.Script.Serialization
 Imports System.Windows.Forms
@@ -261,6 +262,59 @@ Namespace General
                     Yield dir
                 Catch : End Try
             Next
+        End Function
+    End Module
+
+    Module Sorting
+        Public Sub Sort(sender As ListView, items As ListView.ListViewItemCollection, columnIndex As Integer, sortOrder As SortOrder)
+            Dim itemInfos As IOrderedEnumerable(Of ListViewItem) = items.Cast(Of ListViewItem).OrderBy(Function(x) x.Text)
+
+            If sortOrder = SortOrder.Ascending Then
+                itemInfos = itemInfos.OrderBy(Function(x) keySelector(x, sender, columnIndex))
+                itemInfos = itemInfos.ThenBy(Function(x) keySelector(x, sender, 0))
+            ElseIf sortOrder = SortOrder.Descending Then
+                itemInfos = itemInfos.OrderByDescending(Function(x) keySelector(x, sender, columnIndex))
+                itemInfos = itemInfos.ThenByDescending(Function(x) keySelector(x, sender, 0))
+            Else
+                Return
+            End If
+
+            Dim itemArr As ListViewItem() = itemInfos.ToArray()
+
+            sender.BeginUpdate()
+            items.Clear()
+            items.AddRange(itemArr)
+            sender.EndUpdate()
+        End Sub
+
+        Private Function keySelector(item As ListViewItem, sender As ListView, columnIndex As Integer) As Object
+            If sender Is FactorioInstanceManager.lstInstalls Then
+                Dim install As Settings.Install = FactorioInstanceManager.GetInstall(item)
+                Select Case columnIndex
+                    Case 0
+                        Return install.Path
+                    Case 1
+                        Return install.Version
+                    Case 2
+                        Return item.SubItems(2).Text
+                    Case Else
+                        Throw New InvalidOperationException($"Invalid columnIndex! ({columnIndex})")
+                End Select
+            ElseIf sender Is FactorioInstanceManager.lstInstances Then
+                Dim instance As Settings.Instance = FactorioInstanceManager.GetInstance(item)
+                Select Case columnIndex
+                    Case 0
+                        Return instance.Path
+                    Case 1
+                        Return instance.Version
+                    Case 2
+                        Return instance.IconPath
+                    Case Else
+                        Throw New InvalidOperationException($"Invalid columnIndex! ({columnIndex})")
+                End Select
+            Else
+                Throw New InvalidOperationException($"Invalid Sender! ({sender?.ToString()})")
+            End If
         End Function
     End Module
 End Namespace

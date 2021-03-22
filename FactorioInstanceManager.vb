@@ -425,6 +425,30 @@ Public Class FactorioInstanceManager
         End If
     End Sub
 
+    Private lastInstallSort As Collections.Generic.KeyValuePair(Of Integer, SortOrder)
+    Private Sub lstInstalls_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles lstInstalls.ColumnClick
+        If e.Column = lastInstallSort.Key Then
+            lastInstallSort = New Collections.Generic.KeyValuePair(Of Integer, SortOrder)(e.Column,
+                If(lastInstallSort.Value = SortOrder.Ascending, SortOrder.Descending, SortOrder.Ascending))
+        Else
+            lastInstallSort = New Collections.Generic.KeyValuePair(Of Integer, SortOrder)(e.Column, SortOrder.Ascending)
+        End If
+        General.Sort(lstInstalls, lstInstalls.Items, lastInstallSort.Key, lastInstallSort.Value)
+        UpdateSettingsItems()
+    End Sub
+
+    Private lastInstanceSort As Collections.Generic.KeyValuePair(Of Integer, SortOrder)
+    Private Sub lstInstances_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles lstInstances.ColumnClick
+        If e.Column = lastInstanceSort.Key Then
+            lastInstanceSort = New Collections.Generic.KeyValuePair(Of Integer, SortOrder)(e.Column,
+                If(lastInstanceSort.Value = SortOrder.Ascending, SortOrder.Descending, SortOrder.Ascending))
+        Else
+            lastInstanceSort = New Collections.Generic.KeyValuePair(Of Integer, SortOrder)(e.Column, SortOrder.Ascending)
+        End If
+        General.Sort(lstInstances, lstInstances.Items, lastInstanceSort.Key, lastInstanceSort.Value)
+        UpdateSettingsItems()
+    End Sub
+
     Private Sub ListViews_ColumnResized() Handles lstInstalls.ColumnWidthChanged, lstInstances.ColumnWidthChanged
         If _settingsLoaded Then
             Settings.ColumnInstallPathWidth = colHeadInstallsPath.Width
