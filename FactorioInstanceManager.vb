@@ -369,7 +369,11 @@ Public Class FactorioInstanceManager
     Private Sub lstInstalls_ItemActivate() Handles lstInstalls.ItemActivate
         If lstInstalls.SelectedItems.Count > 0 Then
             For Each item As Settings.Install In lstInstalls.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstall)
-                Helpers.OpenFolder(item.Path)
+                Try
+                    Helpers.OpenFolder(item.Path)
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message & Environment.NewLine, "Error Opening Install Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
             Next
         End If
     End Sub
@@ -377,7 +381,11 @@ Public Class FactorioInstanceManager
     Private Sub lstInstances_ItemActivate() Handles lstInstances.ItemActivate
         If lstInstances.SelectedItems.Count > 0 Then
             For Each item As Settings.Instance In lstInstances.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstance)
-                Helpers.OpenFolder(item.Path)
+                Try
+                    Helpers.OpenFolder(item.Path)
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message & Environment.NewLine, "Error Opening Instance Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
             Next
         End If
     End Sub
@@ -411,13 +419,21 @@ Public Class FactorioInstanceManager
     Private Sub ctxMainOpenFolder_Click() Handles ctxMainOpenFolder.Click
         If ctxMain.SourceControl Is lstInstalls Then
             For Each item As Settings.Install In lstInstalls.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstall)
-                Helpers.OpenFolder(item.Path)
+                Try
+                    Helpers.OpenFolder(item.Path)
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message & Environment.NewLine, "Error Opening Install Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
             Next
         End If
 
         If ctxMain.SourceControl Is lstInstances Then
             For Each item As Settings.Instance In lstInstances.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstance)
-                Helpers.OpenFolder(item.Path)
+                Try
+                    Helpers.OpenFolder(item.Path)
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message & Environment.NewLine, "Error Opening Instance Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
             Next
         End If
     End Sub
