@@ -125,10 +125,10 @@ Public Class Helpers
         Try
             OokiiDialogsLoadedDelegate()
             Return True
-        Catch ex As FileNotFoundException When ex.FileName.StartsWith("Ookii.Dialogs")
+        Catch ex As FileNotFoundException When ex.FileName.StartsWith("FactorioInstanceManager-Ookii.Dialogs")
             Return False
         Catch ex As Exception
-            MessageBox.Show("Unexpected error loading Ookii.Dialogs.dll!" & Environment.NewLine & Environment.NewLine & ex.Message,
+            MessageBox.Show("Unexpected error loading FactorioInstanceManager-Ookii.Dialogs.dll!" & Environment.NewLine & Environment.NewLine & ex.Message,
                             "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Return False
         End Try
