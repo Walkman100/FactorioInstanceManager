@@ -32,6 +32,13 @@ Public Class Settings
         ' preload values in case they aren't set
         WindowWidth = FactorioInstanceManager.Width
         WindowHeight = FactorioInstanceManager.Height
+        SplitterDistance = FactorioInstanceManager.scMain.SplitterDistance
+        ColumnInstallPathWidth = FactorioInstanceManager.colHeadInstallsPath.Width
+        ColumnInstallVersionWidth = FactorioInstanceManager.colHeadInstallsVersion.Width
+        ColumnInstallInstanceWidth = FactorioInstanceManager.colHeadInstallsActiveInstance.Width
+        ColumnInstancePathWidth = FactorioInstanceManager.colHeadInstancesPath.Width
+        ColumnInstanceVersionWidth = FactorioInstanceManager.colHeadInstancesVersion.Width
+        ColumnInstanceIconPathWidth = FactorioInstanceManager.colHeadInstancesIconPath.Width
 
         Try
             If File.Exists(_settingsPath) Then
@@ -59,6 +66,13 @@ Public Class Settings
     Public Shared Property WindowWidth As Integer
     Public Shared Property WindowHeight As Integer
     Public Shared Property DisableUpdateCheck As Boolean
+    Public Shared Property SplitterDistance As Integer
+    Public Shared Property ColumnInstallPathWidth As Integer
+    Public Shared Property ColumnInstallVersionWidth As Integer
+    Public Shared Property ColumnInstallInstanceWidth As Integer
+    Public Shared Property ColumnInstancePathWidth As Integer
+    Public Shared Property ColumnInstanceVersionWidth As Integer
+    Public Shared Property ColumnInstanceIconPathWidth As Integer
 
     ' make sure _defaultInstancePath always has at least a space, to prevent XML saving/loading issues
     Private Shared _defaultInstancePath As String = " "
@@ -101,6 +115,27 @@ Public Class Settings
                             Case "DisableUpdateCheck"
                                 reader.Read()
                                 Boolean.TryParse(reader.Value, DisableUpdateCheck)
+                            Case "SplitterDistance"
+                                reader.Read()
+                                Integer.TryParse(reader.Value, SplitterDistance)
+                            Case "ColumnInstallPathWidth"
+                                reader.Read()
+                                Integer.TryParse(reader.Value, ColumnInstallPathWidth)
+                            Case "ColumnInstallVersionWidth"
+                                reader.Read()
+                                Integer.TryParse(reader.Value, ColumnInstallVersionWidth)
+                            Case "ColumnInstallInstanceWidth"
+                                reader.Read()
+                                Integer.TryParse(reader.Value, ColumnInstallInstanceWidth)
+                            Case "ColumnInstancePathWidth"
+                                reader.Read()
+                                Integer.TryParse(reader.Value, ColumnInstancePathWidth)
+                            Case "ColumnInstanceVersionWidth"
+                                reader.Read()
+                                Integer.TryParse(reader.Value, ColumnInstanceVersionWidth)
+                            Case "ColumnInstanceIconPathWidth"
+                                reader.Read()
+                                Integer.TryParse(reader.Value, ColumnInstanceIconPathWidth)
                             Case "DefaultInstancePath"
                                 reader.Read()
                                 DefaultInstancePath = reader.Value
@@ -148,6 +183,13 @@ Public Class Settings
             writer.WriteElementString("WindowWidth", WindowWidth.ToString())
             writer.WriteElementString("WindowHeight", WindowHeight.ToString())
             writer.WriteElementString("DisableUpdateCheck", DisableUpdateCheck.ToString())
+            writer.WriteElementString("SplitterDistance", SplitterDistance.ToString())
+            writer.WriteElementString("ColumnInstallPathWidth", ColumnInstallPathWidth.ToString())
+            writer.WriteElementString("ColumnInstallVersionWidth", ColumnInstallVersionWidth.ToString())
+            writer.WriteElementString("ColumnInstallInstanceWidth", ColumnInstallInstanceWidth.ToString())
+            writer.WriteElementString("ColumnInstancePathWidth", ColumnInstancePathWidth.ToString())
+            writer.WriteElementString("ColumnInstanceVersionWidth", ColumnInstanceVersionWidth.ToString())
+            writer.WriteElementString("ColumnInstanceIconPathWidth", ColumnInstanceIconPathWidth.ToString())
             writer.WriteElementString("DefaultInstancePath", _defaultInstancePath)
             writer.WriteEndElement() ' Settings
 

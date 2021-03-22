@@ -18,6 +18,14 @@ Public Class FactorioInstanceManager
 
         If Settings.WindowMaximised Then Me.WindowState = FormWindowState.Maximized
 
+        scMain.SplitterDistance = Settings.SplitterDistance
+        colHeadInstallsPath.Width = Settings.ColumnInstallPathWidth
+        colHeadInstallsVersion.Width = Settings.ColumnInstallVersionWidth
+        colHeadInstallsActiveInstance.Width = Settings.ColumnInstallInstanceWidth
+        colHeadInstancesPath.Width = Settings.ColumnInstancePathWidth
+        colHeadInstancesVersion.Width = Settings.ColumnInstanceVersionWidth
+        colHeadInstancesIconPath.Width = Settings.ColumnInstanceIconPathWidth
+
         menuStripToolsEnableUpdate.Checked = Not Settings.DisableUpdateCheck
         If Not Settings.DisableUpdateCheck Then
             WalkmanLib.CheckIfUpdateAvailableInBackground("FactorioInstanceManager", My.Application.Info.Version,
@@ -407,6 +415,25 @@ Public Class FactorioInstanceManager
                     MessageBox.Show(ex.Message & Environment.NewLine, "Error Opening Instance Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             Next
+        End If
+    End Sub
+
+    Private Sub scMain_SplitterMoved() Handles scMain.SplitterMoved
+        If _settingsLoaded Then
+            Settings.SplitterDistance = scMain.SplitterDistance
+            Settings.SaveSettings()
+        End If
+    End Sub
+
+    Private Sub ListViews_ColumnResized() Handles lstInstalls.ColumnWidthChanged, lstInstances.ColumnWidthChanged
+        If _settingsLoaded Then
+            Settings.ColumnInstallPathWidth = colHeadInstallsPath.Width
+            Settings.ColumnInstallVersionWidth = colHeadInstallsVersion.Width
+            Settings.ColumnInstallInstanceWidth = colHeadInstallsActiveInstance.Width
+            Settings.ColumnInstancePathWidth = colHeadInstancesPath.Width
+            Settings.ColumnInstanceVersionWidth = colHeadInstancesVersion.Width
+            Settings.ColumnInstanceIconPathWidth = colHeadInstancesIconPath.Width
+            Settings.SaveSettings()
         End If
     End Sub
 
