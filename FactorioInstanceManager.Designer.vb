@@ -71,6 +71,7 @@ Partial Class FactorioInstanceManager
         Me.ctxMainReplace = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMainRemove = New System.Windows.Forms.ToolStripMenuItem()
+        Me.lblVersion = New System.Windows.Forms.Label()
         Me.menuStripMain.SuspendLayout()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scMain.Panel1.SuspendLayout()
@@ -413,11 +414,23 @@ Partial Class FactorioInstanceManager
         Me.ctxMainRemove.Size = New System.Drawing.Size(142, 22)
         Me.ctxMainRemove.Text = "Remove"
         '
+        'lblVersion
+        '
+        Me.lblVersion.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblVersion.BackColor = System.Drawing.SystemColors.ControlLightLight
+        Me.lblVersion.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblVersion.Location = New System.Drawing.Point(695, 0)
+        Me.lblVersion.Name = "lblVersion"
+        Me.lblVersion.Size = New System.Drawing.Size(30, 9)
+        Me.lblVersion.Text = "v0.0.0"
+        Me.lblVersion.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
         'FactorioInstanceManager
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(725, 418)
+        Me.Controls.Add(Me.lblVersion)
         Me.Controls.Add(Me.scMain)
         Me.Controls.Add(Me.menuStripMain)
         Me.Icon = Global.My.Resources.Resources.factorio_instance_manager
@@ -485,4 +498,5 @@ Partial Class FactorioInstanceManager
     Friend WithEvents ctxMainSetSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ctxMainSetSame As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxMainSetAll As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents lblVersion As System.Windows.Forms.Label
 End Class

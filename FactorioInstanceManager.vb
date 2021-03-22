@@ -9,6 +9,7 @@ Public Class FactorioInstanceManager
     Private Sub FactorioInstanceManager_Load() Handles Me.Shown
         lstInstalls.DoubleBuffered(True)
         lstInstances.DoubleBuffered(True)
+        lblVersion.Text = "v" & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build
 
         Dim configFileExisted As Boolean = Settings.Init()
 
