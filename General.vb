@@ -48,7 +48,11 @@ Namespace General
                 factorioPath = factorioPath.Replace("__PATH__executable__", Path.Combine(installPath, "bin", "x64"))
             End If
             If factorioPath.StartsWith("__PATH__system-write-data__") Then
-                factorioPath = factorioPath.Replace("__PATH__system-write-data__", Path.Combine(Environment.GetEnvironmentVariable("AppData"), "Factorio"))
+                If Helpers.GetOS() = OS.Windows Then
+                    factorioPath = factorioPath.Replace("__PATH__system-write-data__", Path.Combine(Environment.GetEnvironmentVariable("AppData"), "Factorio"))
+                ElseIf Helpers.GetOS = OS.Linux Then
+                    factorioPath = factorioPath.Replace("__PATH__system-write-data__", Path.Combine(Environment.GetEnvironmentVariable("HOME"), ".factorio"))
+                End If
             End If
             Return factorioPath
         End Function
@@ -187,7 +191,24 @@ Namespace General
             'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 427520\InstallLocation
             Dim keyPath As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 427520"
 
-            ' always use 32-bit view
+            Dim localKey As Microsoft.Win32.RegistryKey = Microsoft.Win32.RegistryKey.OpenBaseKey(
+                    Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Default)
+            localKey = localKey.OpenSubKey(keyPath)
+
+            If localKey IsNot Nothing AndAlso localKey.GetValue("InstallLocation") IsNot Nothing Then
+                Dim rtn As String = localKey.GetValue("InstallLocation").ToString()
+                If Directory.Exists(rtn) Then
+                    Return Path.GetFullPath(rtn)
+                End If
+            End If
+
+            Return Nothing
+        End Function
+
+        Function FindStandaloneInstall() As String
+            'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Factorio_is1\InstallLocation
+            Dim keyPath As String = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Factorio_is1"
+
             Dim localKey As Microsoft.Win32.RegistryKey = Microsoft.Win32.RegistryKey.OpenBaseKey(
                     Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Default)
             localKey = localKey.OpenSubKey(keyPath)
