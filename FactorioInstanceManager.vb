@@ -355,21 +355,36 @@ Public Class FactorioInstanceManager
         End If
     End Sub
     Private Sub menuStripToolsDetectInstall_Click() Handles menuStripToolsDetectInstall.Click
-        Dim installPath As String = General.FindSteamInstall()
+        Dim steamInstallPath As String = General.FindSteamInstall()
+        Dim standaloneInstallPath As String = General.FindStandaloneInstall()
 
-        If installPath IsNot Nothing Then
+        If steamInstallPath IsNot Nothing Then
             Dim installVersion As Version = Nothing
             Try
-                installVersion = General.GetInstallVersion(installPath)
+                installVersion = General.GetInstallVersion(steamInstallPath)
             Catch : End Try
 
             lstInstalls.Items.Add(CreateInstallItem(New Settings.Install With {
-                                                        .Path = installPath,
+                                                        .Path = steamInstallPath,
                                                         .Version = installVersion
                                                     }))
-            UpdateSettingsItems()
+        End If
+        If standaloneInstallPath IsNot Nothing Then
+            Dim installVersion As Version = Nothing
+            Try
+                installVersion = General.GetInstallVersion(standaloneInstallPath)
+            Catch : End Try
+
+            lstInstalls.Items.Add(CreateInstallItem(New Settings.Install With {
+                                                        .Path = standaloneInstallPath,
+                                                        .Version = installVersion
+                                                    }))
+        End If
+
+        If steamInstallPath Is Nothing AndAlso standaloneInstallPath Is Nothing Then
+            MessageBox.Show("Could not find Factorio Steam install or installed Standalone install!")
         Else
-            MessageBox.Show("Could not find Factorio Steam install!")
+            UpdateSettingsItems()
         End If
     End Sub
     Private Async Sub menuStripToolsUpdate_Click() Handles menuStripToolsUpdate.Click

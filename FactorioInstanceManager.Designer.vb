@@ -202,43 +202,43 @@ Partial Class FactorioInstanceManager
         '
         Me.menuStripToolsScan.Name = "menuStripToolsScan"
         Me.menuStripToolsScan.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F), System.Windows.Forms.Keys)
-        Me.menuStripToolsScan.Size = New System.Drawing.Size(209, 22)
+        Me.menuStripToolsScan.Size = New System.Drawing.Size(242, 22)
         Me.menuStripToolsScan.Text = "Scan for Instances"
         '
         'menuStripToolsDetectInstall
         '
         Me.menuStripToolsDetectInstall.Name = "menuStripToolsDetectInstall"
-        Me.menuStripToolsDetectInstall.Size = New System.Drawing.Size(209, 22)
-        Me.menuStripToolsDetectInstall.Text = "Detect Steam Install"
+        Me.menuStripToolsDetectInstall.Size = New System.Drawing.Size(242, 22)
+        Me.menuStripToolsDetectInstall.Text = "Detect Steam/Standalone Install"
         '
         'menuStripToolsSeparator1
         '
         Me.menuStripToolsSeparator1.Name = "menuStripToolsSeparator1"
-        Me.menuStripToolsSeparator1.Size = New System.Drawing.Size(206, 6)
+        Me.menuStripToolsSeparator1.Size = New System.Drawing.Size(239, 6)
         '
         'menuStripToolsUpdate
         '
         Me.menuStripToolsUpdate.Name = "menuStripToolsUpdate"
         Me.menuStripToolsUpdate.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.menuStripToolsUpdate.Size = New System.Drawing.Size(209, 22)
+        Me.menuStripToolsUpdate.Size = New System.Drawing.Size(242, 22)
         Me.menuStripToolsUpdate.Text = "Update Versions"
         '
         'menuStripToolsSeparator2
         '
         Me.menuStripToolsSeparator2.Name = "menuStripToolsSeparator2"
-        Me.menuStripToolsSeparator2.Size = New System.Drawing.Size(206, 6)
+        Me.menuStripToolsSeparator2.Size = New System.Drawing.Size(239, 6)
         '
         'menuStripToolsSetDefaultInstancePath
         '
         Me.menuStripToolsSetDefaultInstancePath.Name = "menuStripToolsSetDefaultInstancePath"
-        Me.menuStripToolsSetDefaultInstancePath.Size = New System.Drawing.Size(209, 22)
+        Me.menuStripToolsSetDefaultInstancePath.Size = New System.Drawing.Size(242, 22)
         Me.menuStripToolsSetDefaultInstancePath.Text = "Set Default Instance Path"
         '
         'menuStripToolsEnableUpdate
         '
         Me.menuStripToolsEnableUpdate.CheckOnClick = True
         Me.menuStripToolsEnableUpdate.Name = "menuStripToolsEnableUpdate"
-        Me.menuStripToolsEnableUpdate.Size = New System.Drawing.Size(209, 22)
+        Me.menuStripToolsEnableUpdate.Size = New System.Drawing.Size(242, 22)
         Me.menuStripToolsEnableUpdate.Text = "Enable Update Check"
         '
         'scMain
