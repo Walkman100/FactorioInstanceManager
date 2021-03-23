@@ -43,6 +43,16 @@ Namespace General
             Return Helpers.ResizeImage(Drawing.Image.FromFile(installIconPath), imageSize)
         End Function
 
+        Private Function ReplaceFactorioVars(factorioPath As String, installPath As String) As String
+            If factorioPath.StartsWith("__PATH__executable__") Then
+                factorioPath = factorioPath.Replace("__PATH__executable__", Path.Combine(installPath, "bin", "x64"))
+            End If
+            If factorioPath.StartsWith("__PATH__system-write-data__") Then
+                factorioPath = factorioPath.Replace("__PATH__system-write-data__", Path.Combine(Environment.GetEnvironmentVariable("AppData"), "Factorio"))
+            End If
+            Return factorioPath
+        End Function
+
         Private Const installInstanceConfigCfg As String = "config-path.cfg"
         Private Const installInstanceConfigIni As String = "config.ini"
         Function GetInstallCurrentInstance(installPath As String) As String
@@ -65,10 +75,8 @@ Namespace General
             If instanceConfigPath Is Nothing Then
                 Throw New InvalidDataException(installInstanceConfigCfg & " missing config-path key!")
             End If
-            If instanceConfigPath.StartsWith("__PATH__executable__") Then
-                instanceConfigPath = instanceConfigPath.Replace("__PATH__executable__", Path.Combine(installPath, "bin", "x64"))
-            End If
 
+            instanceConfigPath = ReplaceFactorioVars(instanceConfigPath, installPath)
             instanceConfigPath = Path.Combine(Path.GetFullPath(instanceConfigPath), installInstanceConfigIni)
             If Not File.Exists(instanceConfigPath) Then
                 Throw New FileNotFoundException("Invalid Instance Config! Missing " & installInstanceConfigIni, instanceConfigPath)
@@ -95,6 +103,7 @@ Namespace General
                 Throw New InvalidDataException(installInstanceConfigIni & " missing write-data key!")
             End If
 
+            instancePath = ReplaceFactorioVars(instancePath, installPath)
             instancePath = Path.GetFullPath(instancePath)
 
             Return instancePath
