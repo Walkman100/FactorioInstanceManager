@@ -21,4 +21,4 @@ FactorioInstanceManager is stored in, it will use this file instead.
 
 ## Data Modification
 Note that the only data modification (other than this app's settings and creating/deleting instances)
-is done in [General.Installs.SetInstallCurrentInstance](General.vb#L102)
+is done in [General.Installs.SetInstallCurrentInstance](General.vb#L116)
