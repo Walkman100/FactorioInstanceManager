@@ -29,8 +29,7 @@ Public Class FactorioInstanceManager
 
         menuStripToolsEnableUpdate.Checked = Not Settings.DisableUpdateCheck
         If Not Settings.DisableUpdateCheck Then
-            WalkmanLib.CheckIfUpdateAvailableInBackground("FactorioInstanceManager", My.Application.Info.Version,
-                                                          New ComponentModel.RunWorkerCompletedEventHandler(AddressOf UpdateCheckComplete))
+            WalkmanLib.CheckIfUpdateAvailableInBackground("FactorioInstanceManager", My.Application.Info.Version, AddressOf UpdateCheckComplete)
         End If
 
         lstInstalls.SmallImageList = New ImageList() With {.ColorDepth = ColorDepth.Depth32Bit, .ImageSize = New Drawing.Size(16, 16)}
