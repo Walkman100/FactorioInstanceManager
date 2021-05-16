@@ -11,6 +11,13 @@ Public Class FactorioInstanceManager
         lstInstances.DoubleBuffered(True)
         lblVersion.Text = "v" & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build
 
+        AddHandler lstInstalls.DrawItem, AddressOf WalkmanLib.CustomPaint.ListView_DrawDefaultItem
+        AddHandler lstInstalls.DrawSubItem, AddressOf WalkmanLib.CustomPaint.ListView_DrawDefaultSubItem
+        AddHandler lstInstalls.DrawColumnHeader, AddressOf WalkmanLib.CustomPaint.ListView_DrawCustomColumnHeader
+        AddHandler lstInstances.DrawItem, AddressOf WalkmanLib.CustomPaint.ListView_DrawDefaultItem
+        AddHandler lstInstances.DrawSubItem, AddressOf WalkmanLib.CustomPaint.ListView_DrawDefaultSubItem
+        AddHandler lstInstances.DrawColumnHeader, AddressOf WalkmanLib.CustomPaint.ListView_DrawCustomColumnHeader
+
         Dim configFileExisted As Boolean = Settings.Init()
 
         Me.Width = Settings.WindowWidth
@@ -91,8 +98,14 @@ Public Class FactorioInstanceManager
     End Sub
 
     Private Sub SetTheme(theme As WalkmanLib.Theme)
-        WalkmanLib.ApplyTheme(theme, Me)
-        WalkmanLib.ApplyTheme(theme, Me.components.Components)
+        WalkmanLib.ApplyTheme(theme, Me, True)
+        WalkmanLib.ApplyTheme(theme, Me.components.Components, True)
+        lstInstalls.Tag = theme.ListViewColumnColors
+        lstInstances.Tag = theme.ListViewColumnColors
+        If theme = WalkmanLib.Theme.Dark Then
+            lstInstalls.OwnerDraw = True
+            lstInstances.OwnerDraw = True
+        End If
 
         If theme = WalkmanLib.Theme.Default Then
             menuStripMain.RenderMode = ToolStripRenderMode.ManagerRenderMode
