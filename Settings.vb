@@ -66,6 +66,7 @@ Public Class Settings
     Public Shared Property WindowWidth As Integer
     Public Shared Property WindowHeight As Integer
     Public Shared Property DisableUpdateCheck As Boolean
+    Public Shared Property ThemeIndex As Integer
     Public Shared Property SplitterDistance As Integer
     Public Shared Property ColumnInstallPathWidth As Integer
     Public Shared Property ColumnInstallVersionWidth As Integer
@@ -115,6 +116,9 @@ Public Class Settings
                             Case "DisableUpdateCheck"
                                 reader.Read()
                                 Boolean.TryParse(reader.Value, DisableUpdateCheck)
+                            Case "ThemeIndex"
+                                reader.Read()
+                                Integer.TryParse(reader.Value, ThemeIndex)
                             Case "SplitterDistance"
                                 reader.Read()
                                 Integer.TryParse(reader.Value, SplitterDistance)
@@ -183,6 +187,7 @@ Public Class Settings
             writer.WriteElementString("WindowWidth", WindowWidth.ToString())
             writer.WriteElementString("WindowHeight", WindowHeight.ToString())
             writer.WriteElementString("DisableUpdateCheck", DisableUpdateCheck.ToString())
+            writer.WriteElementString("ThemeIndex", ThemeIndex.ToString())
             writer.WriteElementString("SplitterDistance", SplitterDistance.ToString())
             writer.WriteElementString("ColumnInstallPathWidth", ColumnInstallPathWidth.ToString())
             writer.WriteElementString("ColumnInstallVersionWidth", ColumnInstallVersionWidth.ToString())

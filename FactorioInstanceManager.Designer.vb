@@ -45,6 +45,7 @@ Partial Class FactorioInstanceManager
         Me.menuStripToolsSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.menuStripToolsUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripToolsSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.menuStripToolsTheme = New System.Windows.Forms.ToolStripComboBox()
         Me.menuStripToolsSetDefaultInstancePath = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuStripToolsEnableUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.scMain = New System.Windows.Forms.SplitContainer()
@@ -193,7 +194,7 @@ Partial Class FactorioInstanceManager
         '
         'menuStripTools
         '
-        Me.menuStripTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuStripToolsScan, Me.menuStripToolsDetectInstall, Me.menuStripToolsSeparator1, Me.menuStripToolsUpdate, Me.menuStripToolsSeparator2, Me.menuStripToolsSetDefaultInstancePath, Me.menuStripToolsEnableUpdate})
+        Me.menuStripTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuStripToolsScan, Me.menuStripToolsDetectInstall, Me.menuStripToolsSeparator1, Me.menuStripToolsUpdate, Me.menuStripToolsSeparator2, Me.menuStripToolsTheme, Me.menuStripToolsSetDefaultInstancePath, Me.menuStripToolsEnableUpdate})
         Me.menuStripTools.Name = "menuStripTools"
         Me.menuStripTools.Size = New System.Drawing.Size(46, 20)
         Me.menuStripTools.Text = "&Tools"
@@ -227,6 +228,13 @@ Partial Class FactorioInstanceManager
         '
         Me.menuStripToolsSeparator2.Name = "menuStripToolsSeparator2"
         Me.menuStripToolsSeparator2.Size = New System.Drawing.Size(239, 6)
+        '
+        'menuStripToolsTheme
+        '
+        Me.menuStripToolsTheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.menuStripToolsTheme.Items.AddRange(New Object() {"Theme: Default", "Theme: System Dark", "Theme: Dark", "Theme: Inverted", "Theme: Test"})
+        Me.menuStripToolsTheme.Name = "menuStripToolsTheme"
+        Me.menuStripToolsTheme.Size = New System.Drawing.Size(121, 23)
         '
         'menuStripToolsSetDefaultInstancePath
         '
@@ -499,4 +507,5 @@ Partial Class FactorioInstanceManager
     Friend WithEvents ctxMainSetSame As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxMainSetAll As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents lblVersion As System.Windows.Forms.Label
+    Friend WithEvents menuStripToolsTheme As System.Windows.Forms.ToolStripComboBox
 End Class
