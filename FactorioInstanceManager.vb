@@ -27,6 +27,7 @@ Public Class FactorioInstanceManager
         colHeadInstancesVersion.Width = Settings.ColumnInstanceVersionWidth
         colHeadInstancesIconPath.Width = Settings.ColumnInstanceIconPathWidth
 
+        menuStripToolsTheme.SelectedIndex = Settings.ThemeIndex
         menuStripToolsEnableUpdate.Checked = Not Settings.DisableUpdateCheck
         If Not Settings.DisableUpdateCheck Then
             WalkmanLib.CheckIfUpdateAvailableInBackground("FactorioInstanceManager", My.Application.Info.Version, AddressOf UpdateCheckComplete)
@@ -87,6 +88,20 @@ Public Class FactorioInstanceManager
                 End If
             End If
         End If
+    End Sub
+
+    Private Sub SetTheme(theme As WalkmanLib.Theme)
+        WalkmanLib.ApplyTheme(theme, Me)
+        WalkmanLib.ApplyTheme(theme, Me.components.Components)
+
+        If theme = WalkmanLib.Theme.Default Then
+            menuStripMain.RenderMode = ToolStripRenderMode.ManagerRenderMode
+            ctxMain.RenderMode = ToolStripRenderMode.ManagerRenderMode
+        Else
+            menuStripMain.RenderMode = ToolStripRenderMode.System
+            ctxMain.RenderMode = ToolStripRenderMode.System
+        End If
+        lblVersion.BackColor = theme.MenuStripBG
     End Sub
 
     Private Sub UpdateSettingsItems()
@@ -388,6 +403,27 @@ Public Class FactorioInstanceManager
     End Sub
     Private Async Sub menuStripToolsUpdate_Click() Handles menuStripToolsUpdate.Click
         Await UpdateInfo()
+    End Sub
+    Private Sub menuStripToolsTheme_SelectedIndexChanged() Handles menuStripToolsTheme.SelectedIndexChanged
+        Select Case menuStripToolsTheme.SelectedIndex
+            Case 0
+                SetTheme(WalkmanLib.Theme.Default)
+            Case 1
+                SetTheme(WalkmanLib.Theme.SystemDark)
+            Case 2
+                SetTheme(WalkmanLib.Theme.Dark)
+            Case 3
+                SetTheme(WalkmanLib.Theme.Inverted)
+            Case 4
+                SetTheme(WalkmanLib.Theme.Test)
+            Case Else
+                SetTheme(WalkmanLib.Theme.Default)
+                Return
+        End Select
+        If _settingsLoaded Then
+            Settings.ThemeIndex = menuStripToolsTheme.SelectedIndex
+            Settings.SaveSettings()
+        End If
     End Sub
     Private Sub menuStripToolsSetDefaultInstancePath_Click() Handles menuStripToolsSetDefaultInstancePath.Click
         If Helpers.SelectFolderDialog(Settings.DefaultInstancePath, "Select Default Instance Path", False) = DialogResult.OK Then
