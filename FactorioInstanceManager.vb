@@ -108,11 +108,11 @@ Public Class FactorioInstanceManager
         End If
 
         If theme = WalkmanLib.Theme.Default Then
-            menuStripMain.RenderMode = ToolStripRenderMode.ManagerRenderMode
-            ctxMain.RenderMode = ToolStripRenderMode.ManagerRenderMode
+            ToolStripManager.RenderMode = ToolStripManagerRenderMode.Professional
+        ElseIf theme = WalkmanLib.Theme.Inverted Then
+            ToolStripManager.RenderMode = ToolStripManagerRenderMode.System
         Else
-            menuStripMain.RenderMode = ToolStripRenderMode.System
-            ctxMain.RenderMode = ToolStripRenderMode.System
+            ToolStripManager.Renderer = New WalkmanLib.CustomPaint.ToolStripSystemRendererWithDisabled(theme.ToolStripItemDisabledText)
         End If
         lblVersion.BackColor = theme.MenuStripBG
     End Sub
