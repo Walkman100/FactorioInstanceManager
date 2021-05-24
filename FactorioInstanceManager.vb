@@ -102,10 +102,6 @@ Public Class FactorioInstanceManager
         WalkmanLib.ApplyTheme(theme, Me.components.Components, True)
         lstInstalls.Tag = theme.ListViewColumnColors
         lstInstances.Tag = theme.ListViewColumnColors
-        If theme = WalkmanLib.Theme.Dark Then
-            lstInstalls.OwnerDraw = True
-            lstInstances.OwnerDraw = True
-        End If
 
         If theme = WalkmanLib.Theme.Default Then
             ToolStripManager.RenderMode = ToolStripManagerRenderMode.Professional

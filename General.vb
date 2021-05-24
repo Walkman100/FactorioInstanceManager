@@ -114,7 +114,7 @@ Namespace General
         End Function
 
         Sub SetInstallCurrentInstance(installPath As String, instancePath As String)
-            Dim configPath As String = Path.Combine(installPath, "config-path.cfg")
+            Dim configPath As String = Path.Combine(installPath, installInstanceConfigCfg)
             If Not File.Exists(configPath) Then
                 Throw New FileNotFoundException("Invalid Install! Missing " & installInstanceConfigCfg, configPath)
             End If
