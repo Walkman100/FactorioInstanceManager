@@ -11,7 +11,7 @@ Public Class Settings
     Public Shared Function Init() As Boolean
         Dim configFileName As String = "FactorioInstanceManager.xml"
 
-        If Helpers.GetOS() = OS.Windows Then
+        If WalkmanLib.GetOS() = WalkmanLib.OS.Windows Then
             If Not       Directory.Exists(Path.Combine(Environment.GetEnvironmentVariable("AppData"), "WalkmanOSS")) Then
                 Directory.CreateDirectory(Path.Combine(Environment.GetEnvironmentVariable("AppData"), "WalkmanOSS"))
             End If

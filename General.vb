@@ -48,9 +48,9 @@ Namespace General
                 factorioPath = factorioPath.Replace("__PATH__executable__", Path.Combine(installPath, "bin", "x64"))
             End If
             If factorioPath.StartsWith("__PATH__system-write-data__") Then
-                If Helpers.GetOS() = OS.Windows Then
+                If WalkmanLib.GetOS() = WalkmanLib.OS.Windows Then
                     factorioPath = factorioPath.Replace("__PATH__system-write-data__", Path.Combine(Environment.GetEnvironmentVariable("AppData"), "Factorio"))
-                ElseIf Helpers.GetOS = OS.Linux Then
+                ElseIf WalkmanLib.GetOS() = WalkmanLib.OS.Linux Then
                     factorioPath = factorioPath.Replace("__PATH__system-write-data__", Path.Combine(Environment.GetEnvironmentVariable("HOME"), ".factorio"))
                 End If
             End If
@@ -170,19 +170,19 @@ Namespace General
             Dim linExePath32 As String = Path.Combine(installPath, "bin", "x86", "factorio")
             Dim macExePath As String = Path.Combine(installPath, "MacOS", "factorio")
 
-            Select Case Helpers.GetOS()
-                Case OS.Windows
+            Select Case WalkmanLib.GetOS()
+                Case WalkmanLib.OS.Windows
                     If File.Exists(winExePath64) Then Return winExePath64
                     If File.Exists(winExePath32) Then Return winExePath32
-                Case OS.Linux
+                Case WalkmanLib.OS.Linux
                     If File.Exists(linExePath64) Then Return linExePath64
                     If File.Exists(linExePath32) Then Return linExePath32
-                Case OS.Other
+                Case WalkmanLib.OS.MacOS
                     If File.Exists(macExePath) Then Return macExePath
-                    ' check Linux paths anyway, just in case
-                    If File.Exists(linExePath64) Then Return linExePath64
-                    If File.Exists(linExePath32) Then Return linExePath32
             End Select
+            ' check Linux paths anyway, just in case
+            If File.Exists(linExePath64) Then Return linExePath64
+            If File.Exists(linExePath32) Then Return linExePath32
 
             Throw New FileNotFoundException("Executable not found!")
         End Function

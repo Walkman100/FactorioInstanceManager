@@ -6,12 +6,6 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Windows.Forms
 
-Enum OS
-    Windows
-    Linux
-    Other
-End Enum
-
 Public Class Helpers
     Public Shared Sub WriteAllLines(path As String, lines As IEnumerable(Of String), separator As String)
         Using writer As New StreamWriter(path)
@@ -22,28 +16,17 @@ Public Class Helpers
         End Using
     End Sub
 
-    Friend Shared Function GetOS() As OS
-        If Environment.GetEnvironmentVariable("OS") = "Windows_NT" Then
-            Return OS.Windows
-        ElseIf WalkmanLib.RunAndGetOutput("uname") = "Linux" Then
-            Return OS.Linux
-        Else
-            Return OS.Other
-        End If
-    End Function
-
     Public Shared Sub OpenFolder(folderPath As String)
         If Not Directory.Exists(folderPath) Then
             Throw New DirectoryNotFoundException($"Could not find directory ""{folderPath}""")
         End If
 
-        Select Case GetOS()
-            Case OS.Windows
+        Select Case WalkmanLib.GetOS()
+            Case WalkmanLib.OS.Windows
                 Diagnostics.Process.Start(folderPath)
-            Case OS.Linux
+            Case WalkmanLib.OS.Linux
                 Diagnostics.Process.Start("xdg-open", $"""{folderPath}""")
-            Case OS.Other
-                ' macOS
+            Case WalkmanLib.OS.MacOS
                 Diagnostics.Process.Start("open", $"""{folderPath}""")
         End Select
     End Sub
