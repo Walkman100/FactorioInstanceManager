@@ -276,8 +276,8 @@ Namespace General
         End Sub
 
         Async Function DeleteInstance(instancePath As String) As Task(Of Boolean)
-            If MessageBox.Show($"Are you sure you want to delete ""{instancePath}""?", "Deleting Instance",
-                               MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
+            If WalkmanLib.CustomMsgBox($"Are you sure you want to delete ""{instancePath}""?", FactorioInstanceManager.Theme, "Deleting Instance",
+                                       MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
                 Await Task.Run(Sub() Directory.Delete(instancePath, recursive:=True))
                 Return True
             Else

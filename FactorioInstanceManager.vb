@@ -80,7 +80,7 @@ Public Class FactorioInstanceManager
         If Not Settings.DisableUpdateCheck Then
             If e.Error Is Nothing Then
                 If DirectCast(e.Result, Boolean) Then
-                    Select Case WalkmanLib.CustomMsgBox("An update is available!", "Update Check", "Go to Download page", "Disable Update Check",
+                    Select Case WalkmanLib.CustomMsgBox("An update is available!", Theme, "Update Check", "Go to Download page", "Disable Update Check",
                                                         "Ignore", MessageBoxIcon.Information, ownerForm:=Me)
                         Case "Go to Download page"
                             Diagnostics.Process.Start("https://github.com/Walkman100/FactorioInstanceManager/releases/latest")
@@ -89,7 +89,7 @@ Public Class FactorioInstanceManager
                     End Select
                 End If
             Else
-                If WalkmanLib.CustomMsgBox("Update check failed!" & Environment.NewLine & e.Error.Message, "Update Check", "OK",
+                If WalkmanLib.CustomMsgBox("Update check failed!" & Environment.NewLine & e.Error.Message, Theme, "Update Check", "OK",
                                            "Disable Update Check", style:=MessageBoxIcon.Exclamation, ownerForm:=Me) = "Disable Update Check" Then
                     menuStripToolsEnableUpdate.Checked = False
                 End If
@@ -97,7 +97,9 @@ Public Class FactorioInstanceManager
         End If
     End Sub
 
+    Public ReadOnly Property Theme As WalkmanLib.Theme
     Private Sub SetTheme(theme As WalkmanLib.Theme)
+        _Theme = theme
         WalkmanLib.ApplyTheme(theme, Me, True)
         WalkmanLib.ApplyTheme(theme, Me.components.Components, True)
         lstInstalls.Tag = theme.ListViewColumnColors
@@ -241,8 +243,8 @@ Public Class FactorioInstanceManager
                                                           }))
                 UpdateSettingsItems()
             Catch ex As FileNotFoundException
-                MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
-                                "Error Adding Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                        Theme, "Error Adding Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Catch ex As Exception
                 WalkmanLib.ErrorDialog(ex, "Error Adding Instance!" & Environment.NewLine)
             End Try
@@ -259,8 +261,8 @@ Public Class FactorioInstanceManager
                                                         }))
                 UpdateSettingsItems()
             Catch ex As FileNotFoundException
-                MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
-                                "Error Adding Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                        Theme, "Error Adding Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Catch ex As Exception
                 WalkmanLib.ErrorDialog(ex, "Error Adding Install!" & Environment.NewLine)
             End Try
@@ -321,7 +323,7 @@ Public Class FactorioInstanceManager
 
     Private Async Sub menuStripEditSetInstallInstance_Click() Handles menuStripEditSetInstallInstance.Click
         If lstInstances.SelectedItems.Count <> 1 Then
-            MessageBox.Show("Select One Instance to apply!", "Error Setting Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            WalkmanLib.CustomMsgBox("Select One Instance to apply!", Theme, "Error Setting Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
 
@@ -330,8 +332,8 @@ Public Class FactorioInstanceManager
             Try
                 Await Task.Run(Sub() General.SetInstallCurrentInstance(install.Path, instancePath))
             Catch ex As FileNotFoundException
-                MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
-                                "Error Setting Install Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                        Theme, "Error Setting Install Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Catch ex As Exception
                 WalkmanLib.ErrorDialog(ex, "Error Setting Install Instance!" & Environment.NewLine)
             End Try
@@ -405,7 +407,7 @@ Public Class FactorioInstanceManager
         End If
 
         If steamInstallPath Is Nothing AndAlso standaloneInstallPath Is Nothing Then
-            MessageBox.Show("Could not find Factorio Steam install or installed Standalone install!")
+            WalkmanLib.CustomMsgBox("Could not find Factorio Steam install or installed Standalone install!", Theme, " ")
         Else
             UpdateSettingsItems()
         End If
@@ -460,7 +462,7 @@ Public Class FactorioInstanceManager
                 Try
                     Helpers.OpenFolder(item.Path)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message & Environment.NewLine, "Error Opening Install Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine, Theme, "Error Opening Install Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             Next
         End If
@@ -472,7 +474,7 @@ Public Class FactorioInstanceManager
                 Try
                     Helpers.OpenFolder(item.Path)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message & Environment.NewLine, "Error Opening Instance Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine, Theme, "Error Opening Instance Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             Next
         End If
@@ -553,7 +555,7 @@ Public Class FactorioInstanceManager
                 Try
                     Helpers.OpenFolder(item.Path)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message & Environment.NewLine, "Error Opening Install Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine, Theme, "Error Opening Install Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             Next
         End If
@@ -563,7 +565,7 @@ Public Class FactorioInstanceManager
                 Try
                     Helpers.OpenFolder(item.Path)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message & Environment.NewLine, "Error Opening Instance Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine, Theme, "Error Opening Instance Folder", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             Next
         End If
@@ -576,8 +578,8 @@ Public Class FactorioInstanceManager
                         .WorkingDirectory = Path.GetDirectoryName(.FileName)
                     })
                 Catch ex As Exception
-                    MessageBox.Show($"Error launching install at {item.Path}:{Environment.NewLine}{ex.Message}",
-                                    "Error Launching Factorio", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    WalkmanLib.CustomMsgBox($"Error launching install at {item.Path}:{Environment.NewLine}{ex.Message}",
+                                            Theme, "Error Launching Factorio", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 End Try
             Next
         End If
@@ -620,8 +622,8 @@ Public Class FactorioInstanceManager
                         install.Path = selectedPath
                         UpdateInstallItem(item, install)
                     Catch ex As FileNotFoundException
-                        MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
-                                        "Error Updating Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                                Theme, "Error Updating Install", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Catch ex As Exception
                         WalkmanLib.ErrorDialog(ex, "Error Updating Install!" & Environment.NewLine)
                     End Try
@@ -641,8 +643,8 @@ Public Class FactorioInstanceManager
                         instance.Path = selectedPath
                         UpdateInstanceItem(item, instance)
                     Catch ex As FileNotFoundException
-                        MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
-                                        "Error Updating Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                                Theme, "Error Updating Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Catch ex As Exception
                         WalkmanLib.ErrorDialog(ex, "Error Updating Instance!" & Environment.NewLine)
                     End Try
@@ -751,8 +753,8 @@ Public Class FactorioInstanceManager
         Try
             Await Task.Run(Sub() General.SetInstallCurrentInstance(install.Path, item.Text))
         Catch ex As FileNotFoundException
-            MessageBox.Show(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
-                                "Error Setting Install Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
+                                    Theme, "Error Setting Install Instance", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
             WalkmanLib.ErrorDialog(ex, "Error Setting Install Instance!" & Environment.NewLine)
         End Try

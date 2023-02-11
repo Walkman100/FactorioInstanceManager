@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="WalkmanLib\WalkmanLibDotNet.vb" />
     <Compile Include="WalkmanLib\WalkmanLibTheming.vb" />
+    <Compile Include="WalkmanLib\WalkmanLibThemingMsgBox.vb" />
     <Compile Include="WalkmanLib\WalkmanLibUpdates.vb" />
     <Compile Include="WalkmanLib\WalkmanLibWin32.vb" />
   </ItemGroup>
