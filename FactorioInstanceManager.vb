@@ -310,7 +310,7 @@ Public Class FactorioInstanceManager
             If Await General.DeleteInstance(instance.Path) Then
                 item.Remove()
             Else ' restore default color
-                item.ForeColor = Drawing.SystemColors.WindowText
+                item.ForeColor = Nothing
             End If
         Next
         UpdateSettingsItems()
@@ -572,7 +572,9 @@ Public Class FactorioInstanceManager
         If ctxMain.SourceControl Is lstInstalls Then
             For Each item As Settings.Install In lstInstalls.SelectedItems.Cast(Of ListViewItem).Select(AddressOf GetInstall)
                 Try
-                    Diagnostics.Process.Start(General.FindInstallExe(item.Path))
+                    Diagnostics.Process.Start(New Diagnostics.ProcessStartInfo(General.FindInstallExe(item.Path)) With {
+                        .WorkingDirectory = Path.GetDirectoryName(.FileName)
+                    })
                 Catch ex As Exception
                     MessageBox.Show($"Error launching install at {item.Path}:{Environment.NewLine}{ex.Message}",
                                     "Error Launching Factorio", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
