@@ -677,8 +677,12 @@ Public Class FactorioInstanceManager
         End If
     End Sub
 
-    Private Function CreateToolStripMenuItem(instance As Settings.Instance) As ToolStripMenuItem
-        Dim item As ToolStripMenuItem = New ToolStripMenuItem(instance.Path, Nothing, AddressOf ctxMainSet_SubItem_Click)
+    Private Function CreateToolStripMenuItem(instance As Settings.Instance, activeInstancePath As String) As ToolStripMenuItem
+        Dim item As New ToolStripMenuItem(instance.Path, Nothing, AddressOf ctxMainSet_SubItem_Click)
+        If activeInstancePath.ToLowerInvariant() = instance.Path.ToLowerInvariant() Then
+            item.Checked = True
+            Return item ' image overrides checkbox
+        End If
 
         Try
             Dim img As Drawing.Image = Drawing.Image.FromFile(instance.IconPath)
@@ -701,6 +705,7 @@ Public Class FactorioInstanceManager
 
         If lstInstalls.SelectedItems.Count <> 1 Then Exit Sub
         Dim install As Settings.Install = GetInstall(lstInstalls.SelectedItems(0))
+        Dim installActiveInstancePath As String = lstInstalls.SelectedItems(0).SubItems(2).Text
         If install.Version Is Nothing Then Exit Sub
 
         ' 0.17.79: Major.Minor.Build
@@ -728,19 +733,19 @@ Public Class FactorioInstanceManager
         Dim sameVersionIndex As Integer = ctxMainSet.DropDownItems.IndexOf(ctxMainSetSame)
         For i = 0 To InstancesSameVersion.Count - 1
             Dim instance As Settings.Instance = InstancesSameVersion(i)
-            ctxMainSet.DropDownItems.Insert(sameVersionIndex + i + 1, CreateToolStripMenuItem(instance))
+            ctxMainSet.DropDownItems.Insert(sameVersionIndex + i + 1, CreateToolStripMenuItem(instance, installActiveInstancePath))
         Next
 
         Dim sameMajorVersionIndex As Integer = ctxMainSet.DropDownItems.IndexOf(ctxMainSetMajor)
         For i = 0 To InstancesSameMajor.Count - 1
             Dim instance As Settings.Instance = InstancesSameMajor(i)
-            ctxMainSet.DropDownItems.Insert(sameMajorVersionIndex + i + 1, CreateToolStripMenuItem(instance))
+            ctxMainSet.DropDownItems.Insert(sameMajorVersionIndex + i + 1, CreateToolStripMenuItem(instance, installActiveInstancePath))
         Next
 
         Dim allVersionsIndex As Integer = ctxMainSet.DropDownItems.IndexOf(ctxMainSetAll)
         For i = 0 To InstancesAllVersions.Count - 1
             Dim instance As Settings.Instance = InstancesAllVersions(i)
-            ctxMainSet.DropDownItems.Insert(allVersionsIndex + i + 1, CreateToolStripMenuItem(instance))
+            ctxMainSet.DropDownItems.Insert(allVersionsIndex + i + 1, CreateToolStripMenuItem(instance, installActiveInstancePath))
         Next
     End Sub
 
