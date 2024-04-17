@@ -40,7 +40,10 @@ Namespace General
                 Throw New FileNotFoundException("Invalid Install! Missing factorio-icon.png", installIconPath)
             End If
 
-            Return Helpers.ResizeImage(Drawing.Image.FromFile(installIconPath), imageSize)
+            Dim image = Drawing.Image.FromFile(installIconPath)
+            image = DirectCast(image.Clone(), Drawing.Image)
+
+            Return Helpers.ResizeImage(image, imageSize)
         End Function
 
         Private Function ReplaceFactorioVars(factorioPath As String, installPath As String) As String
