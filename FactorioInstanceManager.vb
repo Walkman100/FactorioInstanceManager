@@ -11,12 +11,7 @@ Public Class FactorioInstanceManager
         lstInstances.DoubleBuffered(True)
         lblVersion.Text = "v" & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build
 
-        AddHandler lstInstalls.DrawItem, AddressOf WalkmanLib.CustomPaint.ListView_DrawDefaultItem
-        AddHandler lstInstalls.DrawSubItem, AddressOf WalkmanLib.CustomPaint.ListView_DrawDefaultSubItem
-        AddHandler lstInstalls.DrawColumnHeader, AddressOf WalkmanLib.CustomPaint.ListView_DrawCustomColumnHeader
-        AddHandler lstInstances.DrawItem, AddressOf WalkmanLib.CustomPaint.ListView_DrawDefaultItem
-        AddHandler lstInstances.DrawSubItem, AddressOf WalkmanLib.CustomPaint.ListView_DrawDefaultSubItem
-        AddHandler lstInstances.DrawColumnHeader, AddressOf WalkmanLib.CustomPaint.ListView_DrawCustomColumnHeader
+        WalkmanLib.InitCustomRenderers(Me.Controls)
 
         Dim configFileExisted As Boolean = Settings.Init()
 
@@ -100,18 +95,11 @@ Public Class FactorioInstanceManager
     Public ReadOnly Property Theme As WalkmanLib.Theme
     Private Sub SetTheme(theme As WalkmanLib.Theme)
         _Theme = theme
+        WalkmanLib.SetPreferredAppMode(theme.SystemAppMode)
+        WalkmanLib.ApplyThemeRenderer(theme, Me.Controls)
         WalkmanLib.ApplyTheme(theme, Me, True)
         WalkmanLib.ApplyTheme(theme, Me.components.Components, True)
-        lstInstalls.Tag = theme.ListViewColumnColors
-        lstInstances.Tag = theme.ListViewColumnColors
 
-        If theme = WalkmanLib.Theme.Default Then
-            ToolStripManager.RenderMode = ToolStripManagerRenderMode.Professional
-        ElseIf theme = WalkmanLib.Theme.Inverted Then
-            ToolStripManager.RenderMode = ToolStripManagerRenderMode.System
-        Else
-            ToolStripManager.Renderer = New WalkmanLib.CustomPaint.ToolStripSystemRendererWithDisabled(theme.ToolStripItemDisabledText)
-        End If
         lblVersion.BackColor = theme.MenuStripBG
     End Sub
 
