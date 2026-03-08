@@ -40,38 +40,6 @@ Public Class Helpers
         Return rtnImg
     End Function
 
-    Public Shared Function GetInput(ByRef input As String, Optional windowTitle As String = "",
-                                    Optional header As String = "", Optional content As String = Nothing) As DialogResult
-        If OokiiDialogsLoaded() Then
-            Return OokiiInputBox(input, windowTitle, header, content)
-        Else
-            Dim inputBoxPrompt As String = header
-            If content IsNot Nothing Then
-                inputBoxPrompt &= Environment.NewLine & content
-            End If
-
-            input = Microsoft.VisualBasic.InputBox(inputBoxPrompt, windowTitle, input)
-            If String.IsNullOrEmpty(input) Then
-                Return DialogResult.Cancel
-            Else
-                Return DialogResult.OK
-            End If
-        End If
-    End Function
-    Private Shared Function OokiiInputBox(ByRef input As String, Optional windowTitle As String = "",
-                                          Optional header As String = "", Optional content As String = "") As DialogResult
-        Dim ooInput As New Ookii.Dialogs.InputDialog With {
-            .Input = input,
-            .WindowTitle = windowTitle,
-            .MainInstruction = header,
-            .Content = content
-        }
-
-        Dim returnResult = ooInput.ShowDialog(FactorioInstanceManager)
-        input = ooInput.Input
-        Return returnResult
-    End Function
-
     Public Shared Function SelectFolderDialog(ByRef selectedPath As String, Optional description As String = "",
                                               Optional showNewFolderButton As Boolean = True) As DialogResult
         If OokiiDialogsLoaded() Then
@@ -125,6 +93,6 @@ Module Extensions
     <Extension()>
     Public Sub DoubleBuffered(control As Control, enable As Boolean) ' thanks to https://stackoverflow.com/a/15268338/2999220
         Dim doubleBufferPropertyInfo = control.[GetType]().GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
-        doubleBufferPropertyInfo.SetValue(control, enable, Nothing)
+        doubleBufferPropertyInfo.SetValue(control, enable)
     End Sub
 End Module

@@ -274,7 +274,7 @@ Public Class FactorioInstanceManager
         End If
 
         Dim instanceName As String = ""
-        If Helpers.GetInput(instanceName, "Creating Instance", "Enter Instance Name") <> DialogResult.OK Then
+        If WalkmanLib.InputDialog(instanceName, Theme, mainInstruction:="Enter Instance Name", title:="Creating Instance", ownerForm:=Me) <> DialogResult.OK Then
             Exit Sub
         End If
 
