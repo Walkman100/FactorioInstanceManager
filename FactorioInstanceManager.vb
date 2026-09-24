@@ -94,11 +94,17 @@ Public Class FactorioInstanceManager
 
     Public ReadOnly Property Theme As WalkmanLib.Theme
     Private Sub SetTheme(theme As WalkmanLib.Theme)
+        Dim oldFlatStyle As FlatStyle = menuStripToolsTheme.FlatStyle
+
         _Theme = theme
         WalkmanLib.SetPreferredAppMode(theme.SystemAppMode)
         WalkmanLib.ApplyThemeRenderer(theme, Me.Controls)
         WalkmanLib.ApplyTheme(theme, Me, True)
         WalkmanLib.ApplyTheme(theme, Me.components.Components, True)
+
+        If Me.Created AndAlso oldFlatStyle = FlatStyle.Standard Then
+            WalkmanLib.FixComboBoxFlatBackground(theme, Me.Controls)
+        End If
 
         lblVersion.BackColor = theme.MenuStripBG
     End Sub
