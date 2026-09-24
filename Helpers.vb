@@ -80,7 +80,7 @@ Public Class Helpers
             Return False
         Catch ex As Exception
             WalkmanLib.CustomMsgBox("Unexpected error loading FactorioInstanceManager-Ookii.Dialogs.dll!" & Environment.NewLine & Environment.NewLine & ex.Message,
-                                    FactorioInstanceManager.Theme, "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                                    FactorioInstanceManager.Theme, "Unexpected Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, ownerForm:=FactorioInstanceManager)
             Return False
         End Try
     End Function
