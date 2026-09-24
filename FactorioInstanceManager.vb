@@ -240,7 +240,7 @@ Public Class FactorioInstanceManager
                 WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                         Theme, "Error Adding Instance", MessageBoxButtons.OK, MessageBoxIcon.Error, ownerForm:=Me)
             Catch ex As Exception
-                WalkmanLib.ErrorDialog(ex, "Error Adding Instance!" & Environment.NewLine)
+                WalkmanLib.ErrorDialog(ex, Theme, "Error Adding Instance!" & Environment.NewLine, ownerForm:=Me)
             End Try
         End If
     End Sub
@@ -258,7 +258,7 @@ Public Class FactorioInstanceManager
                 WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                         Theme, "Error Adding Install", MessageBoxButtons.OK, MessageBoxIcon.Error, ownerForm:=Me)
             Catch ex As Exception
-                WalkmanLib.ErrorDialog(ex, "Error Adding Install!" & Environment.NewLine)
+                WalkmanLib.ErrorDialog(ex, Theme, "Error Adding Install!" & Environment.NewLine, ownerForm:=Me)
             End Try
         End If
     End Sub
@@ -329,7 +329,7 @@ Public Class FactorioInstanceManager
                 WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                         Theme, "Error Setting Install Instance", MessageBoxButtons.OK, MessageBoxIcon.Error, ownerForm:=Me)
             Catch ex As Exception
-                WalkmanLib.ErrorDialog(ex, "Error Setting Install Instance!" & Environment.NewLine)
+                WalkmanLib.ErrorDialog(ex, Theme, "Error Setting Install Instance!" & Environment.NewLine, ownerForm:=Me)
             End Try
         Next
 
@@ -619,7 +619,7 @@ Public Class FactorioInstanceManager
                         WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                                 Theme, "Error Updating Install", MessageBoxButtons.OK, MessageBoxIcon.Error, ownerForm:=Me)
                     Catch ex As Exception
-                        WalkmanLib.ErrorDialog(ex, "Error Updating Install!" & Environment.NewLine)
+                        WalkmanLib.ErrorDialog(ex, Theme, "Error Updating Install!" & Environment.NewLine, ownerForm:=Me)
                     End Try
                 End If
             Next
@@ -640,7 +640,7 @@ Public Class FactorioInstanceManager
                         WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                                 Theme, "Error Updating Instance", MessageBoxButtons.OK, MessageBoxIcon.Error, ownerForm:=Me)
                     Catch ex As Exception
-                        WalkmanLib.ErrorDialog(ex, "Error Updating Instance!" & Environment.NewLine)
+                        WalkmanLib.ErrorDialog(ex, Theme, "Error Updating Instance!" & Environment.NewLine, ownerForm:=Me)
                     End Try
                 End If
             Next
@@ -755,7 +755,7 @@ Public Class FactorioInstanceManager
             WalkmanLib.CustomMsgBox(ex.Message & Environment.NewLine & "File path: " & ex.FileName,
                                     Theme, "Error Setting Install Instance", MessageBoxButtons.OK, MessageBoxIcon.Error, ownerForm:=Me)
         Catch ex As Exception
-            WalkmanLib.ErrorDialog(ex, "Error Setting Install Instance!" & Environment.NewLine)
+            WalkmanLib.ErrorDialog(ex, Theme, "Error Setting Install Instance!" & Environment.NewLine, ownerForm:=Me)
         End Try
 
         Await UpdateInfo()
