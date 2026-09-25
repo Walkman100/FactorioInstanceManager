@@ -205,6 +205,20 @@ Namespace General
                 End If
             End If
 
+            'HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam\InstallPath
+            keyPath = "SOFTWARE\Valve\Steam"
+            localKey = Microsoft.Win32.RegistryKey.OpenBaseKey(
+                    Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Default)
+            localKey = localKey.OpenSubKey(keyPath)
+
+            If localKey IsNot Nothing AndAlso localKey.GetValue("InstallPath") IsNot Nothing Then
+                Dim steamInstall As String = localKey.GetValue("InstallPath").ToString()
+                Dim steamFactorioPath As String = Path.Combine(steamInstall, "SteamApps", "common", "Factorio")
+                If Directory.Exists(steamFactorioPath) Then
+                    Return steamFactorioPath
+                End If
+            End If
+
             Return Nothing
         End Function
 
