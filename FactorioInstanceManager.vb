@@ -7,9 +7,10 @@ Imports System.Windows.Forms
 Public Class FactorioInstanceManager
     Private _settingsLoaded As Boolean = False
     Private Sub FactorioInstanceManager_Load() Handles Me.Shown
-        lstInstalls.DoubleBuffered(True)
-        lstInstances.DoubleBuffered(True)
+        lstInstalls.SetDoubleBuffered(True)
+        lstInstances.SetDoubleBuffered(True)
         lblVersion.Text = "v" & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build
+        menuStripToolsTheme.Items.AddRange([Enum].GetNames(GetType(WalkmanLib.ThemeName)).Select(Function(s) "Theme: " & s.Replace("_"c, " "c)).ToArray())
 
         WalkmanLib.InitCustomRenderers(Me.Controls)
 
@@ -410,21 +411,7 @@ Public Class FactorioInstanceManager
         Await UpdateInfo()
     End Sub
     Private Sub menuStripToolsTheme_SelectedIndexChanged() Handles menuStripToolsTheme.SelectedIndexChanged
-        Select Case menuStripToolsTheme.SelectedIndex
-            Case 0
-                SetTheme(WalkmanLib.Theme.Default)
-            Case 1
-                SetTheme(WalkmanLib.Theme.SystemDark)
-            Case 2
-                SetTheme(WalkmanLib.Theme.Dark)
-            Case 3
-                SetTheme(WalkmanLib.Theme.Inverted)
-            Case 4
-                SetTheme(WalkmanLib.Theme.Test)
-            Case Else
-                SetTheme(WalkmanLib.Theme.Default)
-                Return
-        End Select
+        SetTheme(WalkmanLib.GetTheme(DirectCast(menuStripToolsTheme.SelectedIndex, WalkmanLib.ThemeName)))
         If _settingsLoaded Then
             Settings.ThemeIndex = menuStripToolsTheme.SelectedIndex
             Settings.SaveSettings()

@@ -232,7 +232,6 @@ Partial Class FactorioInstanceManager
         'menuStripToolsTheme
         '
         Me.menuStripToolsTheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.menuStripToolsTheme.Items.AddRange(New Object() {"Theme: Default", "Theme: System Dark", "Theme: Dark", "Theme: Inverted", "Theme: Test"})
         Me.menuStripToolsTheme.Name = "menuStripToolsTheme"
         Me.menuStripToolsTheme.Size = New System.Drawing.Size(121, 23)
         '

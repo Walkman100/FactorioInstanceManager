@@ -2,8 +2,6 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.IO
-Imports System.Reflection
-Imports System.Runtime.CompilerServices
 Imports System.Windows.Forms
 
 Public Class Helpers
@@ -88,11 +86,3 @@ Public Class Helpers
         Dim test = Ookii.Dialogs.TaskDialogIcon.Information
     End Sub
 End Class
-
-Module Extensions
-    <Extension()>
-    Public Sub DoubleBuffered(control As Control, enable As Boolean) ' thanks to https://stackoverflow.com/a/15268338/2999220
-        Dim doubleBufferPropertyInfo = control.[GetType]().GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
-        doubleBufferPropertyInfo.SetValue(control, enable)
-    End Sub
-End Module
