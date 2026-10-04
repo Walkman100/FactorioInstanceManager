@@ -289,12 +289,12 @@ Partial Class FactorioInstanceManager
         'colHeadInstallsVersion
         '
         Me.colHeadInstallsVersion.Text = "Version"
-        Me.colHeadInstallsVersion.Width = 100
+        Me.colHeadInstallsVersion.Width = 105
         '
         'colHeadInstallsActiveInstance
         '
         Me.colHeadInstallsActiveInstance.Text = "Active Instance Path"
-        Me.colHeadInstallsActiveInstance.Width = 300
+        Me.colHeadInstallsActiveInstance.Width = 299
         '
         'lstInstances
         '
@@ -319,12 +319,12 @@ Partial Class FactorioInstanceManager
         'colHeadInstancesVersion
         '
         Me.colHeadInstancesVersion.Text = "Last Used Version"
-        Me.colHeadInstancesVersion.Width = 100
+        Me.colHeadInstancesVersion.Width = 105
         '
         'colHeadInstancesIconPath
         '
         Me.colHeadInstancesIconPath.Text = "Icon Path"
-        Me.colHeadInstancesIconPath.Width = 300
+        Me.colHeadInstancesIconPath.Width = 299
         '
         'ctxMain
         '
@@ -443,7 +443,7 @@ Partial Class FactorioInstanceManager
         Me.Icon = Global.My.Resources.Resources.factorio_instance_manager
         Me.MainMenuStrip = Me.menuStripMain
         Me.Name = "FactorioInstanceManager"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Factorio Instance Manager"
         Me.menuStripMain.ResumeLayout(False)
         Me.menuStripMain.PerformLayout()

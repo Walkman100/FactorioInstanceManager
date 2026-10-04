@@ -49,6 +49,10 @@ Public Class FactorioInstanceManager
         _settingsLoaded = True
 
         If Not configFileExisted Then
+            If WalkmanLib.GetDarkThemeEnabled() Then
+                menuStripToolsTheme.SelectedIndex = WalkmanLib.ThemeName.Dark
+            End If
+
             ' detect steam install
             menuStripToolsDetectInstall.PerformClick()
 
@@ -103,7 +107,7 @@ Public Class FactorioInstanceManager
         WalkmanLib.ApplyTheme(theme, Me, True)
         WalkmanLib.ApplyTheme(theme, Me.components.Components, True)
 
-        If Me.Created AndAlso oldFlatStyle = FlatStyle.Standard Then
+        If Me.Created AndAlso oldFlatStyle = FlatStyle.Standard AndAlso menuStripToolsTheme.ComboBox.Created Then
             WalkmanLib.FixComboBoxFlatBackground(theme, Me.Controls)
         End If
 
